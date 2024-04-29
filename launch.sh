@@ -16,6 +16,7 @@ export GDK_BACKEND=broadway
 export NICOTINE_GTK_VERSION=3
 export BROADWAY_DISPLAY=:5
 export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$PUID/bus
+export NO_AT_BRIDGE=1
 
 # Set GTK theme if DARKMODE is enabled
 if [[ $DARKMODE == "true" ]]; then
