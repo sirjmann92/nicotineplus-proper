@@ -145,7 +145,7 @@ private_search_results = True
 
 [ui]
 language = 
-dark_mode = False
+dark_mode = True
 header_bar = True
 icontheme = 
 chatme = #908E8B

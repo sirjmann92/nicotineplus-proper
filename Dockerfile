@@ -3,7 +3,7 @@ FROM ubuntu:24.04
 # Set environment variables
 ENV LOGIN= \
     PASSW= \
-    DARKMODE= \
+    DARKMODE=True \
     PUID=1000 \
     PGID=1000 \
     UPNP=False \
