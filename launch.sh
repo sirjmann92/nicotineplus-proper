@@ -19,9 +19,13 @@ export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$PUID/bus
 export NO_AT_BRIDGE=1
 
 # Set GTK theme if DARKMODE is enabled
+shopt -s nocasematch
+
 if [[ $DARKMODE == "true" ]]; then
     export GTK_THEME=Adwaita:dark
 fi
+
+shopt -u nocasematch
 
 # Define config file paths
 CONFIG_FILE="/home/nicotine/.config/nicotine/config"
