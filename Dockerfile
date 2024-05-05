@@ -28,9 +28,6 @@ RUN apt-get update \
     dbus-x11 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
-# Clean things up
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/* \ 
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
     && userdel -r ubuntu \
     && groupadd -g ${PGID} nicotine \
@@ -40,14 +37,17 @@ RUN apt-get update \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
-# Add Nicotine+ repository, install Nicotine+, and final cleanup
-    && add-apt-repository ppa:nicotine-team/unstable \
-    && apt-get upgrade -y \
+# Add Nicotine+ repository, install Nicotine+, and cleanup
+    && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
+    && apt-get update \
+    && apt-get upgrade -y \
+    && apt-get autoremove \
     && apt-get autoclean \
-    && apt-get autoremove
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
-# Import default Nicotine+ config, nginx config, favicon, and initialization script
+# Import configuration files and launch scripts
 COPY config-default /home/nicotine/config-default
 COPY default /etc/nginx/sites-available/default
 COPY favicon.ico /var/www/favicon.ico

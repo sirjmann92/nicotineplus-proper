@@ -20,11 +20,9 @@ export NO_AT_BRIDGE=1
 
 # Set GTK theme if DARKMODE is enabled
 shopt -s nocasematch
-
-if [[ $DARKMODE == "true" ]]; then
-    export GTK_THEME=Adwaita:dark
-fi
-
+    if [[ $DARKMODE == "True" ]]; then
+        export GTK_THEME=Adwaita:dark
+    fi
 shopt -u nocasematch
 
 # Define config file paths
