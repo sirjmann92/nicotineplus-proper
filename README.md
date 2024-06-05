@@ -83,7 +83,8 @@ Docker Compose Example
          - NOTIFY_CHATROOM=False
          - NOTIFY_MENTION=False 
        volumes:
-         - /your/media/directory:/downloads
+         - /your/downloads/directory:/downloads
+         - /your/share/directory:/shared
          - /your/local/directory/config:/config # Save your config persistently
          - /your/local/directory/config/data:/data # Store your logs, database, and history
        restart: unless-stopped
@@ -98,6 +99,7 @@ Docker Run Example
         //--net=container:YourVPNClientContainerName
         --restart=unless-stopped
         -v /your/media/directory:/downloads
+        -v /your/share/directory:/shared
         -v /your/local/directory/config:/config
         -v /your/local/directory/config/data:/data
         -e LOGIN=YourSoulSeekUsername
