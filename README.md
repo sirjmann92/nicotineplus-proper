@@ -95,7 +95,7 @@ Docker Run Example
 
 *   If you don't use a VPN container, don't use the --net command line below, instead use the "-p 6565:6565" line.
 *   If you do use a separate VPN client container, you should configure the VPN to make port 6565, or your custom port, available.
-*   The 'WEB_UI_PORT' is optional for customer ports, and should match the port (-p) environment variable or VPN
+*   The 'WEB_UI_PORT' is optional for custom ports, and should match the port (-p) environment variable or VPN
         
         docker run -d --name=nicotine
         //--net=container:YourVPNClientContainerName
@@ -154,4 +154,3 @@ Building
 If you're interested in making modifications, or simply prefer to build your own image from the project files, you may download or clone the project and run the following from within the project directory:
 
         $docker build -t yourImageName .
-        
