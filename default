@@ -1,5 +1,5 @@
 server {
-    listen 6565;
+    listen __PORT__;
     server_name localhost;
 
     root /var/www/;

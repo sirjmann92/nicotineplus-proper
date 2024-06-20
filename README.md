@@ -81,7 +81,8 @@ Docker Compose Example
          - NOTIFY_TITLE=False
          - NOTIFY_PM=False
          - NOTIFY_CHATROOM=False
-         - NOTIFY_MENTION=False 
+         - NOTIFY_MENTION=False
+         - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
        volumes:
          - /your/downloads/directory:/downloads
          - /your/share/directory:/shared
@@ -93,7 +94,8 @@ Docker Run Example
 ------------------
 
 *   If you don't use a VPN container, don't use the --net command line below, instead use the "-p 6565:6565" line.
-*   If you do use a separate VPN client container, you should configure the VPN to make port 6565 available for this container.
+*   If you do use a separate VPN client container, you should configure the VPN to make port 6565, or your custom port, available.
+*   The 'WEB_UI_PORT' is optional for customer ports, and should match the port (-p) environment variable or VPN
         
         docker run -d --name=nicotine
         //--net=container:YourVPNClientContainerName
@@ -114,6 +116,7 @@ Docker Run Example
         -e NOTIFY_PM=False
         -e NOTIFY_CHATROOM=False
         -e NOTIFY_MENTION=False
+        //-e WEB_UI_PORT=6565
         //-p 6565:6565
         sirjmann92/nicotineplus-proper:user
 

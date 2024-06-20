@@ -14,7 +14,8 @@ ENV LOGIN= \
     NOTIFY_TITLE=False \
     NOTIFY_PM=False \
     NOTIFY_CHATROOM=False \
-    NOTIFY_MENTION=False
+    NOTIFY_MENTION=False \
+    WEB_UI_PORT=6565
 
 # Expose port for the application
 EXPOSE 6565

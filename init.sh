@@ -12,6 +12,7 @@ log "$(id nicotine)"
 # Define and change UID/GID
 PUID=${PUID:-1000}
 PGID=${PGID:-1000}
+WEB_UI_PORT=${WEB_UI_PORT:-6565}
 
 changed=false
 
@@ -31,6 +32,12 @@ if [ "$changed" = true ]; then
     log "The nicotine user UID/GID has been changed to:"
     log "$(id nicotine)"
 fi
+
+# Update NGINX configuration with the desired port
+if [ "$WEB_UI_PORT" != "6565" ]; then
+    log "Updating NGINX configuration to use port $WEB_UI_PORT..."
+fi
+sed -i "s/__PORT__/$WEB_UI_PORT/g" /etc/nginx/sites-available/default
 
 # Start NGINX server
 log "Starting NGINX server..."
