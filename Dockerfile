@@ -59,3 +59,4 @@ COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
 CMD ["init.sh"]
+

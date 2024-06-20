@@ -154,3 +154,4 @@ Building
 If you're interested in making modifications, or simply prefer to build your own image from the project files, you may download or clone the project and run the following from within the project directory:
 
         $docker build -t yourImageName .
+        

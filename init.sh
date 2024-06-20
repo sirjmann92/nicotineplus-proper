@@ -47,3 +47,4 @@ nginx_pid=$!
 
 # Run Nicotine+ launch script as nicotine user
 su -c "/usr/local/bin/launch.sh" nicotine
+
