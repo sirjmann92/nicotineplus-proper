@@ -28,6 +28,8 @@ RUN apt-get update \
     dbus-x11 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
+    python3-gi-cairo \
+    fonts-noto-cjk \
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
     && userdel -r ubuntu \
     && groupadd -g ${PGID} nicotine \
