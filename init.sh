@@ -9,7 +9,7 @@ log() {
 log "The current nicotine UID/GID is:"
 log "$(id nicotine)"
 
-# Define and change UID/GID
+# Define and change UID/GID, and WebUI port
 PUID=${PUID:-1000}
 PGID=${PGID:-1000}
 WEB_UI_PORT=${WEB_UI_PORT:-6565}
@@ -47,4 +47,3 @@ nginx_pid=$!
 
 # Run Nicotine+ launch script as nicotine user
 su -c "/usr/local/bin/launch.sh" nicotine
-

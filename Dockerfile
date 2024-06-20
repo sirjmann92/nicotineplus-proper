@@ -18,7 +18,7 @@ ENV LOGIN= \
     WEB_UI_PORT=6565
 
 # Expose port for the application
-EXPOSE 6565
+EXPOSE ${WEB_UI_PORT}
 
 # Install dependencies and necessary packages
 RUN apt-get update \
@@ -45,7 +45,7 @@ RUN apt-get update \
     && apt-get install -y nicotine \
     && apt-get update \
     && apt-get upgrade -y \
-    && apt-get autoremove \
+    && apt-get autoremove -y \
     && apt-get autoclean \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
@@ -59,4 +59,3 @@ COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
 CMD ["init.sh"]
-

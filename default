@@ -3,7 +3,7 @@ server {
     server_name localhost;
 
     root /var/www/;
-    
+
     location = /favicon.ico {
         alias /var/www/favicon.ico;
     }
@@ -12,10 +12,9 @@ server {
         proxy_set_header Accept-Encoding "";
         proxy_pass http://localhost:8085/;
 
-        sub_filter_once off;            
+        sub_filter_once off;
         sub_filter "<title>" "<dummy>";
         sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
         sub_filter "broadway 2.0" "";
     }
 }
-

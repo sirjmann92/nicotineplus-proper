@@ -7,13 +7,25 @@ Nicotine+ aims to be a lightweight, pleasant, free and open source (FOSS) altern
   
 For more information, head to the official Nicotine+ website, at: [https://nicotine-plus.org](https://nicotine-plus.org)
   
-This is a Nicotine+ Docker image, using port 6565 to access Nicotine+ in a browser using the Broadway backend of GTK as the display server. This makes the image extremely small, lightweight, and fast, because it has less complications and dependencies. This also means there is no authentication available to access the application (as there would be with noVNC). If you plan to use this remotely as part of your self-hosted setup, you'll need to use something like Authentik or Authelia to provide the authenticaion layer. Alternatively, you could use a self-hosted VPN server and access the application externally as if you're on the local network. These items are outside the scope of this project but I wanted to provide alternatives if you need to access the application while you're away from your local network.
+This is a Nicotine+ Docker image, using port 6565 (by default) to access Nicotine+ in a browser using the Broadway backend of GTK as the display server. This makes the image extremely small, lightweight, and fast, because it has less complications and dependencies. This also means there is no authentication available to access the application (as there would be with noVNC). If you plan to use this remotely as part of your self-hosted setup, you'll need to use something like Authentik or Authelia to provide the authenticaion layer. Alternatively, you could use a self-hosted VPN server and access the application externally as if you're on the local network. These items are outside the scope of this project but I wanted to provide alternatives if you need to access the application while you're away from your local network.
   
 Because the application runs natively in a browser when using the Broadway backend of GTK, there is no need for certain features or UI elements to be present (e.g. window control buttons). The Nicotene+ developers were kind enough to remove them for this project. Currently, the window control buttons (minimize, maximize/restore, close) are the only things that have been removed. This should prevent anyone from accidentally closing the application which would require restarting the container to restore it. An added bonus is the usability and accessibility perspectives of not having features available that are irrelevant in the context of a browser, allowing for a more streamlined browser-based experience.
   
 This image is inspired by 33masterman33's clone of freddywullockx's Nicotine+ Docker image. Since the original release that was built on top of the aforementioned images, I've rebuilt the image from scratch, with expanded features and complexity. This is now a completely unique project, but loads of credit should still be given to freddywullockx and 33masterman33 for the inspiration and concept.
 
 You can also find this project at: [https://hub.docker.com/r/sirjmann92/nicotineplus-proper](https://hub.docker.com/r/sirjmann92/nicotineplus-proper)
+
+Features
+-----------------
+*   Support for custom WebUI port
+*   Support for UID/GID assignment
+*   Support for persistent configuration
+*   Support for persistent logging
+*   Darkmode
+*   Favicon and tab label for neatness and easy identification in browsers
+*   Dynamic, timestamped, contextual, logging for clean and consistent logs
+*   Window control buttons are removed (thanks to the N+ developers!) for the Broadway implementation of Nicotine+
+    *   This creates a more native browser-based experience
 
 Included in image
 -----------------
