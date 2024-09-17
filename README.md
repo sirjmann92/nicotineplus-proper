@@ -163,10 +163,14 @@ Make sure your nicotine container is RUNNING when you do this
 Restart the container when finished. The `apt autoremove` command will check for any unnecessary packages and dependencies and remove any it finds, useful for controlling image size.
   
 To list all packages contained in image (with version and description):
-        docker exec -i <container_id> dpkg -l        
+
+        docker exec -i <container_id> dpkg -l
+        
 Building
 --------
 
 If you're interested in making modifications, or simply prefer to build your own image from the project files, you may download or clone the project and run the following from within the project directory:
+
         docker build -t yourImageName .
+        
         
