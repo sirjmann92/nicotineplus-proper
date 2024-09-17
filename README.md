@@ -165,6 +165,7 @@ Restart the container when finished. The `apt autoremove` command will check for
 To list all packages contained in image (with version and description):
 
         docker exec -i <container_id> dpkg -l
+        
 
 Building
 --------
@@ -172,3 +173,4 @@ Building
 If you're interested in making modifications, or simply prefer to build your own image from the project files, you may download or clone the project and run the following from within the project directory:
 
         docker build -t yourImageName .
+        
