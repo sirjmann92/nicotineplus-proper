@@ -146,15 +146,18 @@ With a user that has Docker permissions (or sudo -i), SSH into your NAS/server o
 
 *   Make sure your nicotine container is RUNNING when you do this
 *   If you only want to update Nicotine+ inside the container, use this:
+
         docker exec -it nicotine bash &&
         apt update &&
         apt -y upgrade nicotine &&
         apt -y autoremove
+        
 *   If you want to update all packages inside the container, use this:
         docker exec -it nicotine bash &&
         apt update &&
         apt -y upgrade &&
         apt -y autoremove
+        
     
 Restart the container when finished. The `apt autoremove` command will check for any unnecessary packages and dependencies and remove any it finds, useful for controlling image size.
   
