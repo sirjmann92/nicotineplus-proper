@@ -145,15 +145,17 @@ When a new version of Nicotine+ is released, you have two options of upgrading
 With a user that has Docker permissions (or sudo -i), SSH into your NAS/server or open your CLI terminal and run the following:
 
 *   Make sure your nicotine container is RUNNING when you do this
-*   If you only want to update Nicotine+ inside the container, use this:
 
-        docker exec -it nicotine bash &&
+        docker exec -it nicotine bash
+
+*   If you only want to update Nicotine+ inside the container, use this:
+        
         apt update &&
         apt -y upgrade nicotine &&
         apt -y autoremove
         
 *   If you want to update all packages inside the container, use this:
-        docker exec -it nicotine bash &&
+
         apt update &&
         apt -y upgrade &&
         apt -y autoremove
