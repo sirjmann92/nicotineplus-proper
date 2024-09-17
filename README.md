@@ -142,24 +142,23 @@ When a new version of Nicotine+ is released, you have two options of upgrading
 1.  Wait for me to update the container and pull a new image
 2.  If I haven't updated the container after a new version of Nictone+ has been released and you want the latest and greatest without waiting for me, you may manually update by following the directions below.
 
-With a user that has Docker permissions (or sudo -i), SSH into your NAS/server or open your CLI terminal and run the following:
+Make sure your nicotine container is RUNNING when you do this
+*   With a user that has Docker permissions (or sudo), SSH into your NAS/server or open your CLI terminal
+*   To connect to your container's shell (command line), copy and paste this into your terminal
 
-*   Make sure your nicotine container is RUNNING when you do this
+        sudo docker exec -it nicotine bash
 
-        docker exec -it nicotine bash
-
-*   If you only want to update Nicotine+ inside the container, use this:
-        
-        apt update &&
-        apt -y upgrade nicotine &&
-        apt -y autoremove
-        
-*   If you want to update all packages inside the container, use this:
+*   If you want to update all packages inside the container, copy and paste this into your container's shell:
 
         apt update &&
         apt -y upgrade &&
         apt -y autoremove
+
+*   If you only want to update Nicotine+ inside the container, copy and paste this instead:
         
+        apt update &&
+        apt -y upgrade nicotine &&
+        apt -y autoremove
     
 Restart the container when finished. The `apt autoremove` command will check for any unnecessary packages and dependencies and remove any it finds, useful for controlling image size.
   
