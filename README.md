@@ -73,7 +73,7 @@ Docker Compose Example
     version: '3.9'
     services: 
      nicotineplus-proper:
-       image: 'sirjmann92/nicotineplus-proper:user'
+       image: 'sirjmann92/nicotineplus-proper:latest'
        container_name: nicotine
        network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
        ports: # Comment this line out if you ARE using a VPN container (line above)
