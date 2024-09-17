@@ -130,7 +130,7 @@ Docker Run Example
         -e NOTIFY_MENTION=False
         //-e WEB_UI_PORT=6565
         //-p 6565:6565
-        sirjmann92/nicotineplus-proper:user
+        sirjmann92/nicotineplus-proper:latest
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
 
