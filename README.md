@@ -33,7 +33,7 @@ Included in image
 ### Latest Version (tag: latest)
 
 *   Official Ubuntu 24.04 Base Image
-*   Nicotine+ 3.3.4
+*   Nicotine+ 3.3.5
 *   GTK 3.24.41
 *   Python 3.12.3
 
