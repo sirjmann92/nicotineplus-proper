@@ -26,7 +26,6 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     software-properties-common \
     nginx \
-    net-tools \
     dbus-x11 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
