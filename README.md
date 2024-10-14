@@ -34,8 +34,16 @@ Included in image
 
 *   Official Ubuntu 24.04 Base Image
 *   Nicotine+ 3.3.5
-*   GTK 3.24.41
-*   Python 3.12.3
+
+### Alpine test version (tag: alpine-test)
+
+*   Official Alpine 3.20 Base Image
+*   Latest Nicotine+ RC/dev
+
+### Latest Test Version (tag: test)
+
+*   Official Ubuntu 24.04 Base Image
+*   Latest Nicotine+ RC/dev
 
 ### Installation
 
@@ -109,27 +117,27 @@ Docker Run Example
 *   If you do use a separate VPN client container, you should configure the VPN to make port 6565, or your custom port, available.
 *   The 'WEB_UI_PORT' is optional for custom ports, and should match the port (-p) environment variable or VPN
         
-        docker run -d --name=nicotine
-        //--net=container:YourVPNClientContainerName
-        --restart=unless-stopped
-        -v /your/media/directory:/downloads
-        -v /your/share/directory:/shared
-        -v /your/local/directory/config:/config
-        -v /your/local/directory/config/data:/data
-        -e LOGIN=YourSoulSeekUsername
-        -e PASSW=YourSoulSeekPassword
-        -e DARKMODE=True
-        -e PUID=1000 # Optional: Default is 1000
-        -e PGID=1000 # Optional: Default is 1000
-        -e TRAY_ICON=False
-        -e NOTIFY_FILE=False
-        -e NOTIFY_FOLDER=False
-        -e NOTIFY_TITLE=False
-        -e NOTIFY_PM=False
-        -e NOTIFY_CHATROOM=False
-        -e NOTIFY_MENTION=False
-        //-e WEB_UI_PORT=6565
-        //-p 6565:6565
+        docker run -d --name=nicotine \
+        //--net=container:YourVPNClientContainerName \
+        --restart=unless-stopped \
+        -v /your/media/directory:/downloads \
+        -v /your/share/directory:/shared \
+        -v /your/local/directory/config:/config \
+        -v /your/local/directory/config/data:/data \
+        -e LOGIN=YourSoulSeekUsername \
+        -e PASSW=YourSoulSeekPassword \
+        -e DARKMODE=True \
+        -e PUID=1000 # Optional: Default is 1000 \
+        -e PGID=1000 # Optional: Default is 1000 \
+        -e TRAY_ICON=False \
+        -e NOTIFY_FILE=False \
+        -e NOTIFY_FOLDER=False \
+        -e NOTIFY_TITLE=False \
+        -e NOTIFY_PM=False \
+        -e NOTIFY_CHATROOM=False \
+        -e NOTIFY_MENTION=False \
+        //-e WEB_UI_PORT=6565 \
+        //-p 6565:6565 \
         sirjmann92/nicotineplus-proper:latest
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
