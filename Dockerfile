@@ -40,7 +40,7 @@ RUN apt-get update \
     && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine /home/nicotine/.config/dconf \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
-    && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
+    && chown -R nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
 # Add Nicotine+ repository, install Nicotine+, and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
