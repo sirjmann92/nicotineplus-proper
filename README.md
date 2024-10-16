@@ -35,14 +35,19 @@ Included in image
 *   Official Ubuntu 24.04 Base Image
 *   Nicotine+ 3.3.5
 
-### Alpine test version (tag: alpine-test)
+### Alpine test version (tag: alpine)
 
 *   Official Alpine 3.20 Base Image
-*   Latest Nicotine+ RC/dev
+*   Latest Nicotine+
 
 ### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
+*   Latest Nicotine+ RC/dev
+
+### Alpine test version (tag: alpine-test)
+
+*   Official Alpine 3.20 Base Image
 *   Latest Nicotine+ RC/dev
 
 ### Installation
