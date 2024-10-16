@@ -33,7 +33,7 @@ Included in image
 ### Latest Version (tag: latest)
 
 *   Official Ubuntu 24.04 Base Image
-*   Nicotine+ 3.3.5
+*   Latest Nicotine+
 
 ### Alpine test version (tag: alpine)
 
