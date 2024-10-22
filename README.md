@@ -130,6 +130,7 @@ Docker Run Example
         -v /your/share/directory:/shared \
         -v /your/local/directory/config:/config \
         -v /your/local/directory/config/data:/data \
+        -e TZ=Your/Timezone
         -e LOGIN=YourSoulSeekUsername \
         -e PASSW=YourSoulSeekPassword \
         -e DARKMODE=True \
