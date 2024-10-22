@@ -92,7 +92,8 @@ Docker Compose Example
        ports: # Comment this line out if you ARE using a VPN container (line above)
          - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above#)
     #  env_file: .env # Optionally use a .env file to store environment variables and login credentials
-       environment: # All environment variables are optional, use as needed, defaults are listed
+       environment: # All environment variables are optional, use as needed, defaults are listed (timezone has no default)
+         - TZ=Your/Timezone
          - DARKMODE=True
          - LOGIN=YourSoulSeekUsername
          - PASSW=YourSoulSeekPassword
