@@ -78,6 +78,12 @@ Included in image
     *   If you don't know your UID/GID:
         *   For Linux, at a terminal prompt enter "id" and press enter
         *   For Docker on Windows, use "id -u" and "id -g" for the user and group you should use
+*   If you don't use a VPN container, don't use the --net or network_mode commands, instead directly map ports 6565 and 2234
+*   If you do use a separate VPN client container, you need to make your mapped ports available to the VPN (defaults are 6565 and 2234)
+*   The default listen port is 2234, if you change it in the N+ settings, then you also need to change it in your script and/or VPN
+*   The listen port should be open in your router (default is 2234), unless you use a VPN
+*   If you use a VPN, the listen port should be forwarded in your VPN host's settings (default is 2234)
+*   The 'WEB_UI_PORT' is optional for custom Web UI ports, if using a VPN make sure this port is available
 
 Docker Compose Example
 ----------------------
@@ -88,9 +94,10 @@ Docker Compose Example
      nicotineplus-proper:
        image: 'sirjmann92/nicotineplus-proper:latest'
        container_name: nicotine
-       network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
+    #  network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
        ports: # Comment this line out if you ARE using a VPN container (line above)
-         - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above#)
+         - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above)
+         - '2234:2234' # Comment this line out if you ARE using a VPN container (lines above)
     #  env_file: .env # Optionally use a .env file to store environment variables and login credentials
        environment: # All environment variables are optional, use as needed, defaults are listed (timezone has no default)
          - TZ=Your/Timezone
@@ -108,7 +115,7 @@ Docker Compose Example
          - NOTIFY_PM=False
          - NOTIFY_CHATROOM=False
          - NOTIFY_MENTION=False
-         - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
+      #  - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
        volumes:
          - /your/downloads/directory:/downloads
          - /your/share/directory:/shared
@@ -118,10 +125,6 @@ Docker Compose Example
 
 Docker Run Example
 ------------------
-
-*   If you don't use a VPN container, don't use the --net command line below, instead use the "-p 6565:6565" line.
-*   If you do use a separate VPN client container, you should configure the VPN to make port 6565, or your custom port, available.
-*   The 'WEB_UI_PORT' is optional for custom ports, and should match the port (-p) environment variable or VPN
         
         docker run -d --name=nicotine \
         //--net=container:YourVPNClientContainerName \
@@ -145,6 +148,7 @@ Docker Run Example
         -e NOTIFY_MENTION=False \
         //-e WEB_UI_PORT=6565 \
         //-p 6565:6565 \
+        //-p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)

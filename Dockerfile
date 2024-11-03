@@ -33,6 +33,7 @@ RUN apt-get update \
     python3-gi-cairo \
     fonts-noto-cjk \
     tzdata \
+    gettext \
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
     && userdel -r ubuntu \
     && groupadd -g ${PGID} nicotine \
