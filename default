@@ -1,4 +1,4 @@
-server { 
+server {
     listen __PORT__;
     server_name localhost;
 
@@ -6,18 +6,36 @@ server {
 
     location = /favicon.ico {
         alias /var/www/favicon.ico;
+        expires 30d;
+        access_log off;
     }
 
     location / {
         proxy_set_header Accept-Encoding "";
         proxy_pass http://localhost:8085/;
 
-        # WebSocket support
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Sec-WebSocket-Key $http_sec_websocket_key;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
         proxy_http_version 1.1;
 
+        # Keep WebSocket connections alive
+        keepalive_timeout 3600s;     # 1 hour timeout for idle connections
+        proxy_read_timeout 3600s;    # 1 hour wait time for backend responses
+        proxy_send_timeout 3600s;    # 1 hour wait time for sending data to the client
+        proxy_connect_timeout 60s;   # 60 seconds to establish the initial connection  
+
+        # Security headers
+        add_header X-Frame-Options SAMEORIGIN;
+        add_header X-Content-Type-Options nosniff;
+        add_header X-XSS-Protection "1; mode=block";
+
+        # Substitution filters
+        sub_filter_types text/html text/plain;
         sub_filter_once off;
         sub_filter "<title>" "<dummy>";
         sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
