@@ -37,7 +37,7 @@ Included in image
 
 ### Alpine version (tag: alpine)
 
-*   Official Alpine 3.20 Base Image
+*   Official Alpine 3.21 Base Image
 *   Latest Nicotine+
 
 ### Latest Test Version (tag: test)
@@ -47,7 +47,7 @@ Included in image
 
 ### Alpine test version (tag: alpine-test)
 
-*   Official Alpine 3.20 Base Image
+*   Official Alpine 3.21 Base Image
 *   Latest Nicotine+ RC/dev
 
 ### Installation
