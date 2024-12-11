@@ -54,6 +54,7 @@ Included in image
 
 *   Create a directory named "config" on your local machine
 *   Inside the "config" directory, create a directory named "data"
+*   OPTIONAL FOR CUSTOM PLUGINS - Inside the "config" directory, create a directory named "plugins", no need to map the volume. Custom plugins can be managed from config/plugins
 *   Map your local "config" directory to the "/config" directory in the container (see example)
 *   Map your local "data" directory to the "/data" directory in the container (see example)
 

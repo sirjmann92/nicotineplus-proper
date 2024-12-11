@@ -39,9 +39,10 @@ RUN apt-get update \
     && groupadd -g ${PGID} nicotine \
     && useradd -u ${PUID} -g ${PGID} -m -s /bin/bash nicotine \
 # Create directories, symobolic links, and set permissions
-    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine /home/nicotine/.config/dconf \
+    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins /home/nicotine/.config/dconf \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
+    && ln -s /home/nicotine/.local/share/nicotine/plugins /config/plugins \
     && chown -R nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
 # Add Nicotine+ repository, install Nicotine+, and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
@@ -61,4 +62,4 @@ COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
-CMD ["/usr/local/bin/init.sh"]
+CMD ["init.sh"]
