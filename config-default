@@ -15,11 +15,10 @@ banlist = []
 ignorelist = []
 ipignorelist = {}
 ipblocklist = {}
-autojoin = ['nicotine']
+autojoin = []
 autoaway = 15
 away = False
 private_chatrooms = False
-command_aliases = {}
 
 [transfers]
 incompletedir = ${NICOTINE_DATA_HOME}/incomplete
@@ -62,8 +61,8 @@ autoclear_downloads = False
 autoclear_uploads = False
 rescanonstartup = True
 enablefilters = False
-downloadregexp = 
-downloadfilters = [['desktop.ini', 1], ['*.url', 1], ['thumbs.db', 1], ['albumart(_{........-....-....-....-............}_)?(_?(large|small))?\\.jpg', 0]]
+downloadregexp = (\\(.*\.DS_Store|.*\.exe|.*\.msi|Thumbs\.db|desktop\.ini)$)
+downloadfilters = [['*.DS_Store', 1], ['*.exe', 1], ['*.msi', 1], ['desktop.ini', 1], ['Thumbs.db', 1]]
 download_doubleclick = 2
 upload_doubleclick = 2
 downloadsexpanded = True
@@ -104,7 +103,6 @@ transfers = False
 debug_file_output = False
 roomlogsdir = ${NICOTINE_DATA_HOME}/logs/rooms
 privatelogsdir = ${NICOTINE_DATA_HOME}/logs/private
-readroomlogs = True
 readroomlines = 200
 readprivatelines = 200
 private_chats = []
@@ -125,7 +123,7 @@ chat_room = {}
 [searches]
 expand_searches = True
 group_searches = folder_grouping
-maxresults = 150
+maxresults = 300
 enable_history = True
 history = []
 enablefilters = False
@@ -139,9 +137,9 @@ filterbr = []
 filtertype = []
 filterlength = []
 search_results = True
-max_displayed_results = 1500
+max_displayed_results = 2500
 min_search_chars = 3
-private_search_results = True
+private_search_results = False
 
 [ui]
 language = 
@@ -161,7 +159,6 @@ usernamehotspots = True
 usernamestyle = bold
 textbg = 
 search = 
-searchq = GREY
 inputcolor = 
 spellcheck = True
 exitdialog = 1
@@ -183,8 +180,8 @@ searchfont =
 listfont = 
 browserfont = 
 transfersfont = 
-last_tab_id = 
-modes_visible = {'search': True, 'downloads': True, 'uploads': True, 'userbrowse': True, 'userinfo': True, 'private': True, 'chatrooms': True, 'interests': True}
+last_tab_id = search
+modes_visible = {'search': True, 'downloads': True, 'uploads': True, 'userbrowse': True, 'userinfo': True, 'private': True, 'chatrooms': True, 'interests': True, 'userlist': True}
 modes_order = ['search', 'downloads', 'uploads', 'userbrowse', 'userinfo', 'private', 'userlist', 'chatrooms', 'interests']
 buddylistinchatrooms = tab
 trayicon = False
@@ -202,9 +199,6 @@ maximized = True
 reverse_file_paths = True
 file_size_unit = 
 
-[private_rooms]
-rooms = {}
-
 [urls]
 protocols = {}
 
@@ -213,7 +207,6 @@ likes = []
 dislikes = []
 
 [players]
-default = 
 npothercommand = 
 npplayer = mpris
 npformatlist = []
@@ -232,14 +225,13 @@ notification_popup_wish = True
 
 [plugins]
 enable = True
-enabled = []
+enabled = ['core_commands']
 
 [statistics]
-since_timestamp = 0
+since_timestamp = 1734136175
 started_downloads = 0
 completed_downloads = 0
 downloaded_size = 0
 started_uploads = 0
 completed_uploads = 0
 uploaded_size = 0
-
