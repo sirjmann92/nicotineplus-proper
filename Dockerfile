@@ -1,4 +1,5 @@
 FROM ubuntu:24.04
+ARG DEBIAN_FRONTEND=noninteractive
 
 # Set environment variables
 ENV LOGIN= \
@@ -15,7 +16,8 @@ ENV LOGIN= \
     NOTIFY_PM=False \
     NOTIFY_CHATROOM=False \
     NOTIFY_MENTION=False \
-    WEB_UI_PORT=6565
+    WEB_UI_PORT=6565 \
+    TZ=UTC
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
@@ -32,8 +34,9 @@ RUN apt-get update \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
-    tzdata \
     gettext \
+    tzdata \
+    locales \
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
     && userdel -r ubuntu \
     && groupadd -g ${PGID} nicotine \
@@ -42,17 +45,18 @@ RUN apt-get update \
     && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins /home/nicotine/.config/dconf \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
-    && ln -s /home/nicotine/.local/share/nicotine/plugins /config/plugins \
-    && chown -R nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
+    && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
+    && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
 # Add Nicotine+ repository, install Nicotine+, and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
-    && apt-get install -y nicotine \
     && apt-get update \
     && apt-get upgrade -y \
+    && apt-get install -y nicotine \
+    && apt-get update \
     && apt-get autoremove -y \
     && apt-get autoclean \
-    && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    && apt-get clean
 
 # Import configuration files and launch scripts
 COPY config-default /home/nicotine/config-default
@@ -62,4 +66,4 @@ COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
-CMD ["init.sh"]
+CMD ["/usr/local/bin/init.sh"]

@@ -33,6 +33,20 @@ if [ "$changed" = true ]; then
     log "$(id nicotine)"
 fi
 
+# Set the timezone if TZ is provided
+if [ -n "$TZ" ]; then
+    if [ -f "/usr/share/zoneinfo/$TZ" ]; then
+        ln -sf "/usr/share/zoneinfo/$TZ" /etc/localtime
+        echo "$TZ" > /etc/timezone
+        log "Timezone set to $TZ"
+        log "Current time: $(date)"
+    else
+        log "Invalid timezone: $TZ. Falling back to UTC."
+        ln -sf "/usr/share/zoneinfo/UTC" /etc/localtime
+        echo "UTC" > /etc/timezone
+    fi
+fi
+
 # Update NGINX configuration with the desired port
 if [ "$WEB_UI_PORT" != "6565" ]; then
     log "Updating NGINX configuration to use port $WEB_UI_PORT..."

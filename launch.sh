@@ -36,7 +36,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
     cp "$CONFIG_DEFAULT" "$CONFIG_FILE" || { echo "Failed to import default configuration. Exiting..."; exit 1; }
 fi
 
-# Update config files with environment variables
+# Update config file with environment variables
 sed -i "s/login =.*/login = ${LOGIN:-}/g" "$CONFIG_FILE"
 sed -i "s/passw =.*/passw = ${PASSW:-}/g" "$CONFIG_FILE"
 sed -i "s/upnp =.*/upnp = ${UPNP:-}/g" "$CONFIG_FILE"
@@ -48,6 +48,15 @@ sed -i "s/notification_popup_chatroom =.*/notification_popup_chatroom = ${NOTIFY
 sed -i "s/notification_popup_chatroom_mention =.*/notification_popup_chatroom_mention = ${NOTIFY_MENTION:-}/g" "$CONFIG_FILE"
 sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/g" "$CONFIG_FILE"
 sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/g" "$CONFIG_FILE"
+
+# Check if plugins directory exists, create it if not 
+if [ ! -d "/data/plugins" ]; then
+    mkdir -p /data/plugins
+    log "Created plugins directory..."
+    touch /data/plugins/place_custom_plugins_here
+else
+    log "Plugins directory already exists."
+fi
 
 # Launch Nicotine+ as the nicotine user
 log "Starting Nicotine+..."
