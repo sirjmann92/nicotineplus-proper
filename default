@@ -11,9 +11,8 @@ server {
     }
 
     location / {
-        proxy_set_header Accept-Encoding "";
         proxy_pass http://localhost:8085/;
-
+        proxy_set_header Accept-Encoding $http_accept_encoding;
         proxy_set_header Upgrade $http_upgrade;
         proxy_set_header Connection "upgrade";
         proxy_set_header Sec-WebSocket-Key $http_sec_websocket_key;
@@ -35,7 +34,7 @@ server {
         add_header X-XSS-Protection "1; mode=block";
 
         # Substitution filters
-        sub_filter_types text/html text/plain;
+        sub_filter_types text/plain;
         sub_filter_once off;
         sub_filter "<title>" "<dummy>";
         sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
