@@ -63,8 +63,8 @@ rescanonstartup = True
 enablefilters = False
 downloadregexp = (\\(.*\.DS_Store|.*\.exe|.*\.msi|Thumbs\.db|desktop\.ini)$)
 downloadfilters = [['*.DS_Store', 1], ['*.exe', 1], ['*.msi', 1], ['desktop.ini', 1], ['Thumbs.db', 1]]
-download_doubleclick = 2
-upload_doubleclick = 2
+download_doubleclick = 6
+upload_doubleclick = 6
 downloadsexpanded = True
 uploadsexpanded = True
 
