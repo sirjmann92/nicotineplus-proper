@@ -34,21 +34,40 @@ Included in image
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+
+*   Time zone, locale, and UMASK support
+
+### GTK 4 Version (tag: gtk4) - Will become "latest"
+
+*   Official Ubuntu 24.04 Base Image
+*   Latest Nicotine+ using GTK 4
+*   Time zone, locale, and UMASK support
 
 ### Alpine version (tag: alpine)
 
 *   Official Alpine 3.21 Base Image
 *   Latest Nicotine+
+*   Time zone and UMASK support (no locale)
 
 ### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+ RC/dev
+*   Latest Nicotine+ RC/dev branch
+*   Time zone, locale, and UMASK support
+*   Isolated Mode
+
+### GTK 4 Version (tag: gtk4-test) - Will become "latest"
+
+*   Official Ubuntu 24.04 Base Image
+*   Latest Nicotine+ RC/dev branch using GTK 4
+*   Time zone, locale, and UMASK support
+*   Isolated Mode
 
 ### Alpine test version (tag: alpine-test)
 
 *   Official Alpine 3.21 Base Image
-*   Latest Nicotine+ RC/dev
+*   Latest Nicotine+ RC/dev branch
+*   Time zone and UMASK support (no locale)
+*   Isolated Mode
 
 ### Installation
 
@@ -56,7 +75,8 @@ Included in image
 *   Inside the "config" directory, create a directory named "data"
 *   Map your local "config" directory to the "/config" directory in the container (see example)
 *   Map your local "data" directory to the "/data" directory in the container (see example)
-*   FOR CUSTOM PLUGINS - A "plugins" directory will be created automatically if it doesn't exist. Place your custom plugins here to use them in Nictotine+.
+*   FOR CUSTOM PLUGINS: A "plugins" directory will be created automatically under the /data directory (/data/plugins) if it doesn't exist at container startup. Place your custom plugins here to use them in Nictotine+.
+*   When setting a different locale, only LANG is required. LC_ALL and LANGUAGE will be updated by internal scripts. The Language setting in Nicotine+ will still need to be set manually by the user.
 
 #### Docker Compose (recommended)
 
@@ -100,8 +120,10 @@ Docker Compose Example
          - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above)
          - '2234:2234' # Comment this line out if you ARE using a VPN container (lines above)
     #  env_file: .env # Optionally use a .env file to store environment variables and login credentials
-       environment: # All environment variables are optional, use as needed, defaults are listed (timezone has no default)
+       environment: # All environment variables are optional, use as needed, defaults are listed (TZ, LANG, and UMASK have no default)
          - TZ=Your/Timezone
+         - LANG=C.UTF-8
+         - UMASK=022
          - DARKMODE=True
          - LOGIN=YourSoulSeekUsername
          - PASSW=YourSoulSeekPassword
@@ -135,6 +157,8 @@ Docker Run Example
         -v /your/local/directory/config:/config \
         -v /your/local/directory/config/data:/data \
         -e TZ=Your/Timezone \
+        -e LANG=C.UTF-8 \
+        -e UMASK=022 \
         -e LOGIN=YourSoulSeekUsername \
         -e PASSW=YourSoulSeekPassword \
         -e DARKMODE=True \

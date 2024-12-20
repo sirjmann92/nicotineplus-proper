@@ -5,6 +5,24 @@ log() {
     echo "[$(date '+%m/%d/%y %H:%M:%S')] $1"
 }
 
+# Check if UMASK is defined and set it
+if [ -n "${UMASK}" ]; then
+    echo "Setting UMASK to ${UMASK}"
+    umask "${UMASK}"
+else
+    log "UMASK not set, using default (022)"
+    umask 022
+fi
+
+# Check if plugins directory exists, create it if not 
+if [ ! -d "/data/plugins" ]; then
+    mkdir -p /data/plugins
+    log "Created plugins directory..."
+    touch /data/plugins/place_custom_plugins_here
+else
+    log "Plugins directory already exists."
+fi
+
 # Start Broadway daemon and log output
 log "Starting Broadway daemon..."
 broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
@@ -49,15 +67,6 @@ sed -i "s/notification_popup_chatroom_mention =.*/notification_popup_chatroom_me
 sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/g" "$CONFIG_FILE"
 sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/g" "$CONFIG_FILE"
 
-# Check if plugins directory exists, create it if not 
-if [ ! -d "/data/plugins" ]; then
-    mkdir -p /data/plugins
-    log "Created plugins directory..."
-    touch /data/plugins/place_custom_plugins_here
-else
-    log "Plugins directory already exists."
-fi
-
 # Launch Nicotine+ as the nicotine user
 log "Starting Nicotine+..."
-dbus-launch nicotine
+nicotine

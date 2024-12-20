@@ -17,7 +17,11 @@ ENV LOGIN= \
     NOTIFY_CHATROOM=False \
     NOTIFY_MENTION=False \
     WEB_UI_PORT=6565 \
-    TZ=UTC
+    TZ= \
+    LANG= \
+    LANGUAGE= \
+    LC_ALL= \
+    UMASK=
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
@@ -28,7 +32,6 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     software-properties-common \
     nginx \
-    dbus-x11 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
     python3-gi \
