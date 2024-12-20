@@ -17,10 +17,12 @@ You can also find this project at: [https://hub.docker.com/r/sirjmann92/nicotine
 
 Features
 -----------------
-*   Support for custom WebUI port
-*   Support for UID/GID assignment
-*   Support for persistent configuration
-*   Support for persistent logging
+*   Custom WebUI port
+*   UID/GID assignment
+*   Time zone and locale (no locale on Alpine based images)
+*   UMASK support
+*   Configuration and log directory mapping
+*   Custom plugin support
 *   Darkmode
 *   Favicon and tab label for neatness and easy identification in browsers
 *   Dynamic, timestamped, contextual, logging for clean and consistent logs
