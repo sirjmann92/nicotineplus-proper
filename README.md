@@ -26,8 +26,9 @@ Features
 *   Darkmode
 *   Favicon and tab label for neatness and easy identification in browsers
 *   Dynamic, timestamped, contextual, logging for clean and consistent logs
-*   Window control buttons are removed (thanks to the N+ developers!) for the Broadway implementation of Nicotine+
-    *   This creates a more native browser-based experience
+*   NEW! Isolated Mode (test images only for now)
+    *   This creates a more native browser-based experience by removing links and references to external applications and websites, among other things
+    *   Big thanks to the N+ developers!
 
 Included in image
 -----------------
@@ -36,40 +37,31 @@ Included in image
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+
-*   Time zone, locale, and UMASK support
 
 ### GTK 4 Version (tag: gtk4) - Will become "latest"
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ using GTK 4
-*   Time zone, locale, and UMASK support
 
 ### Alpine version (tag: alpine)
 
 *   Official Alpine 3.21 Base Image
 *   Latest Nicotine+
-*   Time zone and UMASK support (no locale)
 
 ### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev branch
-*   Time zone, locale, and UMASK support
-*   Isolated Mode
 
 ### GTK 4 Version (tag: gtk4-test) - Will become "latest"
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev branch using GTK 4
-*   Time zone, locale, and UMASK support
-*   Isolated Mode
 
 ### Alpine test version (tag: alpine-test)
 
 *   Official Alpine 3.21 Base Image
 *   Latest Nicotine+ RC/dev branch
-*   Time zone and UMASK support (no locale)
-*   Isolated Mode
 
 ### Installation
 

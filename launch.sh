@@ -69,4 +69,4 @@ sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/g" "
 
 # Launch Nicotine+ as the nicotine user
 log "Starting Nicotine+..."
-nicotine
+exec nicotine

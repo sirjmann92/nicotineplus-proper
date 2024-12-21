@@ -82,4 +82,4 @@ else
 fi
 
 # Run Nicotine+ launch script as nicotine user
-su -c "/usr/local/bin/launch.sh" nicotine
+exec su -c "/usr/local/bin/launch.sh" nicotine
