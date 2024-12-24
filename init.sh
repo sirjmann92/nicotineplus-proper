@@ -15,8 +15,6 @@ sed -i "s/__PORT__/$WEB_UI_PORT/g" /etc/nginx/sites-available/default
 log "Starting NGINX server..."
 nginx > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
 
-nginx_pid=$!
-
 # Output current nicotine user UID/GID for awareness
 log "The current nicotine UID/GID is:"
 log "$(id nicotine)"

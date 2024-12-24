@@ -7,7 +7,7 @@ log() {
 
 # Check if UMASK is defined and set it
 if [ -n "${UMASK}" ]; then
-    echo "Setting UMASK to ${UMASK}"
+    log "Setting UMASK to ${UMASK}"
     umask "${UMASK}"
 else
     log "UMASK not set, using default (022)"
@@ -27,21 +27,11 @@ fi
 log "Starting Broadway daemon..."
 broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
 
-broadway_pid=$!
-
 # Export environment variables
 export GDK_BACKEND=broadway
-export NICOTINE_GTK_VERSION=3
 export BROADWAY_DISPLAY=:5
-export DBUS_SESSION_BUS_ADDRESS=unix:path=/run/user/$PUID/bus
+export NICOTINE_GTK_VERSION=3
 export NO_AT_BRIDGE=1
-
-# Set GTK theme if DARKMODE is enabled
-shopt -s nocasematch
-    if [[ $DARKMODE == "True" ]]; then
-        export GTK_THEME=Adwaita:dark
-    fi
-shopt -u nocasematch
 
 # Define config file paths
 CONFIG_FILE="/home/nicotine/.config/nicotine/config"
@@ -66,6 +56,25 @@ sed -i "s/notification_popup_chatroom =.*/notification_popup_chatroom = ${NOTIFY
 sed -i "s/notification_popup_chatroom_mention =.*/notification_popup_chatroom_mention = ${NOTIFY_MENTION:-}/g" "$CONFIG_FILE"
 sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/g" "$CONFIG_FILE"
 sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/g" "$CONFIG_FILE"
+
+# Set GTK theme if DARKMODE is enabled
+shopt -s nocasematch
+
+if [[ -n "${DARKMODE}" ]]; then
+    if [[ "${DARKMODE}" == "False" ]]; then
+        sed -i "s/dark_mode =.*/dark_mode = False/g" "$CONFIG_FILE"
+        export GTK_THEME=Adwaita:light
+    else
+        sed -i "s/dark_mode =.*/dark_mode = True/g" "$CONFIG_FILE"
+        export GTK_THEME=Adwaita:dark
+    fi
+else
+    log "DARKMODE not set, using default (dark)."
+    sed -i "s/dark_mode =.*/dark_mode = True/g" "$CONFIG_FILE"
+    export GTK_THEME=Adwaita:dark
+fi
+
+shopt -u nocasematch
 
 # Launch Nicotine+ as the nicotine user
 log "Starting Nicotine+..."

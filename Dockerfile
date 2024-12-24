@@ -4,7 +4,10 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Set environment variables
 ENV LOGIN= \
     PASSW= \
-    DARKMODE=True \
+    DARKMODE= \
+    TZ= \
+    LANG= \
+    UMASK= \
     PUID=1000 \
     PGID=1000 \
     UPNP=False \
@@ -16,28 +19,23 @@ ENV LOGIN= \
     NOTIFY_PM=False \
     NOTIFY_CHATROOM=False \
     NOTIFY_MENTION=False \
-    WEB_UI_PORT=6565 \
-    TZ= \
-    LANG= \
-    LANGUAGE= \
-    LC_ALL= \
-    UMASK=
+    WEB_UI_PORT=6565
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
 
 # Install dependencies and necessary packages
-RUN apt-get update \
-    && apt-get install -y gir1.2-gtk-3.0 \
+RUN apt-get update && apt-get install -y gir1.2-gtk-3.0 \
     && apt-get install -y --no-install-recommends \
     software-properties-common \
-    nginx \
+    gsettings-desktop-schemas \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
     gettext \
+    nginx \
     tzdata \
     locales \
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
@@ -52,10 +50,9 @@ RUN apt-get update \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
 # Add Nicotine+ repository, install Nicotine+, and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
-    && apt-get update \
-    && apt-get upgrade -y \
     && apt-get install -y nicotine \
     && apt-get update \
+    && apt-get upgrade -y \
     && apt-get autoremove -y \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* \
