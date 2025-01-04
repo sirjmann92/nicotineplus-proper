@@ -36,32 +36,35 @@ Included in image
 ### Latest Version (tag: latest)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+
+*   Latest Nicotine+ using GTK 3
 
 ### GTK 4 Version (tag: gtk4) - Will become "latest"
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ using GTK 4
 
-### Alpine version (tag: alpine)
+### Alpine version (tag: alpine) - Will be deprecated
 
 *   Official Alpine 3.21 Base Image
-*   Latest Nicotine+
+*   Latest Nicotine+ using GTK 3
 
 ### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+ RC/dev branch
+*   Latest Nicotine+ RC/dev branch using GTK 3
+*   Isolated mode
 
-### GTK 4 Version (tag: gtk4-test) - Will become "latest"
+### GTK 4 Version (tag: gtk4-test) - Will become "test"
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev branch using GTK 4
+*   Isolated Mode
 
-### Alpine test version (tag: alpine-test)
+### Alpine test version (tag: alpine-test) - Will be deprecated
 
 *   Official Alpine 3.21 Base Image
-*   Latest Nicotine+ RC/dev branch
+*   Latest Nicotine+ RC/dev branch using GTK 4
+*   Isolated mode
 
 ### Installation
 
