@@ -19,18 +19,20 @@ ENV LOGIN= \
     NOTIFY_PM=False \
     NOTIFY_CHATROOM=False \
     NOTIFY_MENTION=False \
-    WEB_UI_PORT=6565
+    WEB_UI_PORT=6565 \
+    PYTHONPATH=/usr/local/lib/python3.12/dist-packages
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
 
-# Install dependencies and necessary packages
-RUN apt-get update && apt-get install -y gir1.2-gtk-3.0 \
-    && apt-get install -y --no-install-recommends \
+# Install runtime dependencies and necessary packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common \
-    gsettings-desktop-schemas \
+    gir1.2-gtk-4.0 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
+    libgtk-4-bin \
+    librsvg2-common \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
@@ -48,7 +50,7 @@ RUN apt-get update && apt-get install -y gir1.2-gtk-3.0 \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
-# Add Nicotine+ repository, install Nicotine+, and cleanup
+# Install Nicotine+ and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
     && apt-get update \
@@ -66,4 +68,4 @@ COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
-CMD ["/usr/local/bin/init.sh"]
+CMD ["init.sh"]
