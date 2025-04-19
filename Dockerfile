@@ -37,7 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-gi-cairo \
     fonts-noto-cjk \
     gettext \
-    ddbus-x11 \
+    dbus-x11 \
     nginx \
     tzdata \
     locales \
