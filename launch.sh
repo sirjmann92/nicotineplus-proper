@@ -73,6 +73,10 @@ fi
 
 shopt -u nocasematch
 
-# Launch Nicotine+ as the nicotine user
+# Start the DBus session
+eval "$(dbus-launch --sh-syntax)"
+export DBUS_SESSION_BUS_ADDRESS
+export DBUS_SESSION_BUS_PID
+
 log "Starting Nicotine+..."
 exec nicotine --isolated 2> >(grep -v "Broken accounting")

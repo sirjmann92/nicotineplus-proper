@@ -37,6 +37,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-gi-cairo \
     fonts-noto-cjk \
     gettext \
+    ddbus-x11 \
     nginx \
     tzdata \
     locales \
@@ -45,7 +46,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && groupadd -g ${PGID} nicotine \
     && useradd -u ${PUID} -g ${PGID} -m -s /bin/bash nicotine \
 # Create directories, symobolic links, and set permissions
-    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins /home/nicotine/.config/dconf \
+    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \

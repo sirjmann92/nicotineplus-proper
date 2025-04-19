@@ -79,5 +79,24 @@ else
     log "Locale not specified, using default (C.UTF-8)"
 fi
 
-# Run Nicotine+ launch script as nicotine user
-exec su -c "/usr/local/bin/launch.sh" nicotine
+# Start the DBus session (if needed) and export the result
+eval "$(dbus-launch --sh-syntax)"
+export DBUS_SESSION_BUS_ADDRESS
+export DBUS_SESSION_BUS_PID
+
+# Hand off to the nicotine user, keeping the current environment
+exec su nicotine -c "env DBUS_SESSION_BUS_ADDRESS='$DBUS_SESSION_BUS_ADDRESS' \
+    DBUS_SESSION_BUS_PID='$DBUS_SESSION_BUS_PID' \
+    LOGIN='$LOGIN' \
+    PASSW='$PASSW' \
+    UPNP='$UPNP' \
+    NOTIFY_FILE='$NOTIFY_FILE' \
+    NOTIFY_FOLDER='$NOTIFY_FOLDER' \
+    NOTIFY_TITLE='$NOTIFY_TITLE' \
+    NOTIFY_PM='$NOTIFY_PM' \
+    NOTIFY_CHATROOM='$NOTIFY_CHATROOM' \
+    NOTIFY_MENTION='$NOTIFY_MENTION' \
+    DARKMODE='$DARKMODE' \
+    AUTO_CONNECT='$AUTO_CONNECT' \
+    TRAY_ICON='$TRAY_ICON' \
+    /usr/local/bin/launch.sh"
