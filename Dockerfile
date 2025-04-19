@@ -20,6 +20,10 @@ ENV LOGIN= \
     NOTIFY_CHATROOM=False \
     NOTIFY_MENTION=False \
     WEB_UI_PORT=6565 \
+    GDK_BACKEND=broadway \
+    BROADWAY_DISPLAY=:5 \
+    NICOTINE_GTK_VERSION=4 \
+    NO_AT_BRIDGE=1 \
     PYTHONPATH=/usr/local/lib/python3.12/dist-packages
 
 # Expose port for the application

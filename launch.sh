@@ -27,12 +27,6 @@ fi
 log "Starting Broadway daemon..."
 gtk4-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
 
-# Export environment variables
-export GDK_BACKEND=broadway
-export BROADWAY_DISPLAY=:5
-export NICOTINE_GTK_VERSION=4
-export NO_AT_BRIDGE=1
-
 # Define config file paths
 CONFIG_FILE="/home/nicotine/.config/nicotine/config"
 CONFIG_DEFAULT="/home/nicotine/config-default"
@@ -79,4 +73,7 @@ export DBUS_SESSION_BUS_ADDRESS
 export DBUS_SESSION_BUS_PID
 
 log "Starting Nicotine+..."
-exec nicotine --isolated 2> >(grep -v "Broken accounting")
+exec nicotine --isolated 2> >(
+    grep -v "Broken accounting" |
+    grep -v "GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER"
+)
