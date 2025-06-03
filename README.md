@@ -106,6 +106,7 @@ Docker Compose Example
     #  network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
        ports: # Comment this line out if you ARE using a VPN container (line above)
          - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above)
+         - '2234:2234' # Comment this line out if you ARE using a VPN container (lines above)
     #  env_file: .env # Optionally use a .env file to store environment variables and login credentials
        environment: # All environment variables are optional, defaults are listed (TZ, LANG, UMASK, and FORWARD_PORT have no default)
          - TZ=Your/Timezone
@@ -154,7 +155,8 @@ Docker Run Example
         //-e UMASK=022 \
         //-e FORWARD_PORT=12345 \
         //-e WEB_UI_PORT=6565 \
-        //-p 6565:6565 \
+        -p 6565:6565 \
+        -p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
