@@ -39,39 +39,49 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 # Update config file with environment variables
-sed -i "s/login =.*/login = ${LOGIN:-}/g" "$CONFIG_FILE"
-sed -i "s/passw =.*/passw = ${PASSW:-}/g" "$CONFIG_FILE"
-sed -i "s/upnp =.*/upnp = ${UPNP:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_popup_file =.*/notification_popup_file = ${NOTIFY_FILE:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_popup_folder =.*/notification_popup_folder = ${NOTIFY_FOLDER:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_window_title =.*/notification_window_title = ${NOTIFY_TITLE:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_popup_private_message =.*/notification_popup_private_message = ${NOTIFY_PM:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_popup_chatroom =.*/notification_popup_chatroom = ${NOTIFY_CHATROOM:-}/g" "$CONFIG_FILE"
-sed -i "s/notification_popup_chatroom_mention =.*/notification_popup_chatroom_mention = ${NOTIFY_MENTION:-}/g" "$CONFIG_FILE"
-sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/g" "$CONFIG_FILE"
-sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/g" "$CONFIG_FILE"
+sed -i "s/login =.*/login = ${LOGIN:-}/" "$CONFIG_FILE"
+sed -i "s/passw =.*/passw = ${PASSW:-}/" "$CONFIG_FILE"
+sed -i "s/upnp =.*/upnp = ${UPNP:-}/" "$CONFIG_FILE"
+sed -i "s/notification_popup_file =.*/notification_popup_file = ${NOTIFY_FILE:-}/" "$CONFIG_FILE"
+sed -i "s/notification_popup_folder =.*/notification_popup_folder = ${NOTIFY_FOLDER:-}/" "$CONFIG_FILE"
+sed -i "s/notification_window_title =.*/notification_window_title = ${NOTIFY_TITLE:-}/" "$CONFIG_FILE"
+sed -i "s/notification_popup_private_message =.*/notification_popup_private_message = ${NOTIFY_PM:-}/" "$CONFIG_FILE"
+sed -i "s/notification_popup_chatroom =.*/notification_popup_chatroom = ${NOTIFY_CHATROOM:-}/" "$CONFIG_FILE"
+sed -i "s/notification_popup_chatroom_mention =.*/notification_popup_chatroom_mention = ${NOTIFY_MENTION:-}/" "$CONFIG_FILE"
+sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/" "$CONFIG_FILE"
+sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/" "$CONFIG_FILE"
 
 # Set GTK theme if DARKMODE is enabled
 shopt -s nocasematch
 
 if [[ -n "${DARKMODE}" ]]; then
     if [[ "${DARKMODE}" == "False" ]]; then
-        sed -i "s/dark_mode =.*/dark_mode = False/g" "$CONFIG_FILE"
+        sed -i "s/dark_mode =.*/dark_mode = False/" "$CONFIG_FILE"
     else
-        sed -i "s/dark_mode =.*/dark_mode = True/g" "$CONFIG_FILE"
+        sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
     fi
 else
     log "DARKMODE not set, using default (dark)."
-    sed -i "s/dark_mode =.*/dark_mode = True/g" "$CONFIG_FILE"
+    sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
 fi
 
 shopt -u nocasematch
+
+# Check if FORWARD_PORT is set and update config file
+if [[ -n "$FORWARD_PORT" ]]; then
+    # Only replace portrange if the env var is explicitly set
+    sed -i "s/^portrange =.*/portrange = (${FORWARD_PORT}, ${FORWARD_PORT})/" "$CONFIG_FILE"
+    log "Listening port updated. Now listening on port: ${FORWARD_PORT}"
+else
+    log "FORWARD_PORT not set, leaving existing portrange unchanged."
+fi
 
 # Start the DBus session
 eval "$(dbus-launch --sh-syntax)"
 export DBUS_SESSION_BUS_ADDRESS
 export DBUS_SESSION_BUS_PID
 
+# Start Nicotine+ in isolated mode, filter harmless messages
 log "Starting Nicotine+..."
 exec nicotine --isolated 2> >(
     grep -v "Broken accounting" |

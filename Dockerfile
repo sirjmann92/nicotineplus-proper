@@ -2,13 +2,7 @@ FROM ubuntu:24.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Set environment variables
-ENV LOGIN= \
-    PASSW= \
-    DARKMODE= \
-    TZ= \
-    LANG= \
-    UMASK= \
-    PUID=1000 \
+ENV PUID=1000 \
     PGID=1000 \
     UPNP=False \
     AUTO_CONNECT=True \
@@ -23,8 +17,8 @@ ENV LOGIN= \
     GDK_BACKEND=broadway \
     BROADWAY_DISPLAY=:5 \
     NICOTINE_GTK_VERSION=4 \
-    NO_AT_BRIDGE=1 \
-    PYTHONPATH=/usr/local/lib/python3.12/dist-packages
+    NO_AT_BRIDGE=1
+#    PYTHONPATH=/usr/local/lib/python3.12/dist-packages
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}

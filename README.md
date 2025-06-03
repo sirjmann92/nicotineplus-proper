@@ -5,7 +5,7 @@ Nicotine+ is a graphical client for the Soulseek peer-to-peer network.
   
 Nicotine+ aims to be a lightweight, pleasant, free and open source (FOSS) alternative to the official Soulseek client, while also providing a comprehensive set of features.
   
-For more information, head to the official Nicotine+ website, at: [https://nicotine-plus.org](https://nicotine-plus.org)
+For more information, head to the [official Nicotine+ website](https://nicotine-plus.org)
   
 This is a Nicotine+ Docker image, using port 6565 (by default) to access Nicotine+ in a browser using the Broadway back end of GTK as the display server. This makes the image extremely small, lightweight, and fast, because it has less complications and dependencies. This also means there is no authentication available to access the application (as there would be with noVNC). If you plan to use this remotely as part of your self-hosted setup, you'll need to use something like Authentik or Authelia to provide the authenticaion layer. Alternatively, you could use a self-hosted VPN server and access the application externally as if you're on the local network. These items are outside the scope of this project but I wanted to provide alternatives if you need to access the application while you're away from your local network.
 
@@ -13,10 +13,11 @@ Because the application renders natively in a browser when using the Broadway ba
 
 This image is inspired by 33masterman33's clone of freddywullockx's Nicotine+ Docker image. Since the original release that was built on top of the aforementioned images, I've rebuilt the image from scratch, with expanded features and complexity. This is now a completely unique project, but loads of credit should still be given to freddywullockx and 33masterman33 for the inspiration and concept.
 
-You can also find this project at: [https://hub.docker.com/r/sirjmann92/nicotineplus-proper](https://hub.docker.com/r/sirjmann92/nicotineplus-proper)
+You can also find this project [on the Docker Hub](https://hub.docker.com/r/sirjmann92/nicotineplus-proper)
 
 Features
 -----------------
+*   Port config override (for dynamic VPN forwarded ports)
 *   Custom WebUI port
 *   UID/GID assignment
 *   Time zone and locale (no locale on Alpine based images)
@@ -26,7 +27,9 @@ Features
 *   Darkmode
 *   Favicon and tab label for neatness and easy identification in browsers
 *   Dynamic, timestamped, contextual, logging for clean and consistent logs
-*   Isolated Mode (all images)
+*   Isolated Mode
+    *   Tweaks for a contained environment (such as links to external applications, certain network settings, UI elements, etc.)
+    *   [Details here](https://github.com/nicotine-plus/nicotine-plus/issues/3219#issue-2738992137)
     *   Big thanks to the N+ developers!
 
 Included in image
@@ -88,12 +91,14 @@ Included in image
 *   The listen port should be open in your router (default is 2234), unless you use a VPN
 *   If you use a VPN, the listen port should be forwarded in your VPN host's settings (default is 2234)
 *   The 'WEB_UI_PORT' is optional for custom Web UI ports, if using a VPN make sure this port is available
+*   The 'FORWARD_PORT' environment variable will update the listening port in the config file, before starting the container
+    *   This variable may be used with dynamic ports from VPN providers, along with a custom script/setup
+    *   Supporting dynamic port setups is outside the scope of this project, but [here is one example and solution](https://github.com/sirjmann92/nicotineplus-proper/issues/19#issuecomment-2931876766)
 
 Docker Compose Example
 ----------------------
 
     ---
-    version: '3.9'
     services: 
      nicotineplus-proper:
        image: 'sirjmann92/nicotineplus-proper:latest'
@@ -101,27 +106,27 @@ Docker Compose Example
     #  network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
        ports: # Comment this line out if you ARE using a VPN container (line above)
          - '6565:6565' # Comment this line out if you ARE using a VPN container (lines above)
-         - '2234:2234' # Comment this line out if you ARE using a VPN container (lines above)
     #  env_file: .env # Optionally use a .env file to store environment variables and login credentials
-       environment: # All environment variables are optional, use as needed, defaults are listed (TZ, LANG, and UMASK have no default)
+       environment: # All environment variables are optional, defaults are listed (TZ, LANG, UMASK, and FORWARD_PORT have no default)
          - TZ=Your/Timezone
-         - LANG=C.UTF-8
-         - UMASK=022
-         - DARKMODE=True
          - LOGIN=YourSoulSeekUsername
          - PASSW=YourSoulSeekPassword
-         - PUID=1000
-         - PGID=1000
-         - UPNP=False 
-         - AUTO_CONNECT=True
-         - TRAY_ICON=False
-         - NOTIFY_FILE=False
-         - NOTIFY_FOLDER=False
-         - NOTIFY_TITLE=False
-         - NOTIFY_PM=False
-         - NOTIFY_CHATROOM=False
-         - NOTIFY_MENTION=False
-      #  - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
+      #   - PUID=1000
+      #   - PGID=1000
+      #   - DARKMODE=True
+      #   - LANG=C.UTF-8
+      #   - UMASK=022
+      #   - UPNP=False 
+      #   - AUTO_CONNECT=True
+      #   - TRAY_ICON=False
+      #   - NOTIFY_FILE=False
+      #   - NOTIFY_FOLDER=False
+      #   - NOTIFY_TITLE=False
+      #   - NOTIFY_PM=False
+      #   - NOTIFY_CHATROOM=False
+      #   - NOTIFY_MENTION=False
+      #   - FORWARD_PORT=12345 # Useful for dynamic port forwarding
+      #   - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
        volumes:
          - /your/downloads/directory:/downloads
          - /your/share/directory:/shared
@@ -140,23 +145,16 @@ Docker Run Example
         -v /your/local/directory/config:/config \
         -v /your/local/directory/config/data:/data \
         -e TZ=Your/Timezone \
-        -e LANG=C.UTF-8 \
-        -e UMASK=022 \
         -e LOGIN=YourSoulSeekUsername \
         -e PASSW=YourSoulSeekPassword \
-        -e DARKMODE=True \
-        -e PUID=1000 # Optional: Default is 1000 \
-        -e PGID=1000 # Optional: Default is 1000 \
-        -e TRAY_ICON=False \
-        -e NOTIFY_FILE=False \
-        -e NOTIFY_FOLDER=False \
-        -e NOTIFY_TITLE=False \
-        -e NOTIFY_PM=False \
-        -e NOTIFY_CHATROOM=False \
-        -e NOTIFY_MENTION=False \
+        -e PUID=1000 \
+        -e PGID=1000 \
+        //-e DARKMODE=True \
+        //-e LANG=C.UTF-8 \
+        //-e UMASK=022 \
+        //-e FORWARD_PORT=12345 \
         //-e WEB_UI_PORT=6565 \
         //-p 6565:6565 \
-        //-p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
