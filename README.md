@@ -31,6 +31,10 @@ Features
     *   Tweaks for a contained environment (such as links to external applications, certain network settings, UI elements, etc.)
     *   [Details here](https://github.com/nicotine-plus/nicotine-plus/issues/3219#issue-2738992137)
     *   Big thanks to the N+ developers!
+*   UPDATE 7/19/2025: The "latest" and "latest-test" images now use GTK3
+    *   There are known issues with GTK4 and Broadway that can't be fixed by this image:
+        *   Can't center dialog windows
+        *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
 
 Included in image
 -----------------
@@ -38,22 +42,22 @@ Included in image
 ### Latest Version (tag: latest)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+
+*   Latest Nicotine+ stable using GTK3
 
 ### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+ RC/dev
+*   Latest Nicotine+ RC/dev using GTK3
 
-### GTK 3 Version (tag: gtk3)
-
-*   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+ using GTK 3
-
-### GTK 3 Test Version (tag: gtk3-test)
+### GTK 4 Version (tag: gtk4)
 
 *   Official Ubuntu 24.04 Base Image
-*   Latest Nicotine+ RC/dev branch using GTK 3
+*   Latest Nicotine+ using GTK 4
+
+### GTK 4 Test Version (tag: gtk4-test)
+
+*   Official Ubuntu 24.04 Base Image
+*   Latest Nicotine+ RC/dev branch using GTK 4
 
 ### Installation
 
