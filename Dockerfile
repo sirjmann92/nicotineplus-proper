@@ -30,6 +30,7 @@ RUN apt-get update \
     && apt-get install -y --no-install-recommends \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
+    librsvg2-common \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
@@ -43,7 +44,7 @@ RUN apt-get update \
     && groupadd -g ${PGID} nicotine \
     && useradd -u ${PUID} -g ${PGID} -m -s /bin/bash nicotine \
 # Create directories, symobolic links, and set permissions
-    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins /home/nicotine/.config/dconf \
+    && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
@@ -66,4 +67,4 @@ COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
 
 # Run Nicotine+ startup script
-CMD ["/usr/local/bin/init.sh"]
+CMD ["init.sh"]
