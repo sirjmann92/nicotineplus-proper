@@ -16,20 +16,19 @@ ENV PUID=1000 \
     WEB_UI_PORT=6565 \
     GDK_BACKEND=broadway \
     BROADWAY_DISPLAY=:5 \
-    NICOTINE_GTK_VERSION=3 \
+    NICOTINE_GTK_VERSION=4 \
     NO_AT_BRIDGE=1
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
 
-# Install dependencies and necessary packages
-RUN apt-get update \
-    && apt-get install -y gir1.2-gtk-3.0 \
+# Install runtime dependencies and necessary packages
+RUN apt-get update && apt-get install -y --no-install-recommends \
     software-properties-common \
-    gsettings-desktop-schemas \
-    && apt-get install -y --no-install-recommends \
+    gir1.2-gtk-4.0 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
+    libgtk-4-bin \
     librsvg2-common \
     python3-gi \
     python3-gi-cairo \
@@ -49,7 +48,7 @@ RUN apt-get update \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
-# Add Nicotine+ repository, install Nicotine+, and cleanup
+# Install Nicotine+ and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
     && apt-get update \

@@ -25,7 +25,7 @@ fi
 
 # Start Broadway daemon and log output
 log "Starting Broadway daemon..."
-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
+gtk4-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
 
 # Define config file paths
 CONFIG_FILE="/home/nicotine/.config/nicotine/config"
@@ -57,15 +57,12 @@ shopt -s nocasematch
 if [[ -n "${DARKMODE}" ]]; then
     if [[ "${DARKMODE}" == "False" ]]; then
         sed -i "s/dark_mode =.*/dark_mode = False/" "$CONFIG_FILE"
-        export GTK_THEME=Adwaita:light
     else
         sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
-        export GTK_THEME=Adwaita:dark
     fi
 else
     log "DARKMODE not set, using default (dark)."
     sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
-    export GTK_THEME=Adwaita:dark
 fi
 
 shopt -u nocasematch
@@ -84,6 +81,9 @@ eval "$(dbus-launch --sh-syntax)"
 export DBUS_SESSION_BUS_ADDRESS
 export DBUS_SESSION_BUS_PID
 
-# Start Nicotine+ in isolated mode
+# Start Nicotine+ in isolated mode, filter harmless messages
 log "Starting Nicotine+..."
-exec nicotine --isolated
+exec nicotine --isolated 2> >(
+    grep -v "Broken accounting" |
+    grep -v "GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER"
+)
