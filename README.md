@@ -35,7 +35,7 @@ Features
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
     *   No clipboard management (copy/paste from out->in or in->out of the image won't work)
-        * This is true for the GTK3 images too, no copy/paste, this is an upstream defect
+        * This is true for the GTK3 images too, no copy/paste, this is an upstream issue
 
 Included in image
 -----------------
