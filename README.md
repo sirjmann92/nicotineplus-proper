@@ -17,7 +17,7 @@ You can also find this project [on the Docker Hub](https://hub.docker.com/r/sirj
 
 Features
 -----------------
-*   NEW! Now available for both x86 and arm architectures
+*   NEW! Now available for both x86/amd64 and arm64 architectures
 *   Port config override (for dynamic VPN forwarded ports)
 *   Custom WebUI port
 *   UID/GID assignment
