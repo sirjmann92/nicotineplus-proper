@@ -1,2 +1,3 @@
 build-latest.sh
 build-push-latest.sh
+build-deploy-nicotine.sh
