@@ -14,13 +14,34 @@ else
     umask 022
 fi
 
-# Check if plugins directory exists, create it if not 
+# Check if plugins and download directories exists, create it if not
 if [ ! -d "/data/plugins" ]; then
     mkdir -p /data/plugins
     log "Created plugins directory..."
     touch /data/plugins/place_custom_plugins_here
 else
     log "Plugins directory exists, skipping setup..."
+fi
+
+if [ ! -d "/data/downloads" ]; then
+    mkdir -p /data/downloads
+    log "Created downloads directory..."
+else
+    log "Downloads directory exists, skipping setup..."
+fi
+
+if [ ! -d "/data/incomplete" ]; then
+    mkdir -p /data/incomplete
+    log "Created incomplete directory..."
+else
+    log "Incomplete directory exists, skipping setup..."
+fi
+
+if [ ! -d "/data/received" ]; then
+    mkdir -p /data/received
+    log "Created received directory..."
+else
+    log "Received directory exists, skipping setup..."
 fi
 
 # Start Broadway daemon and log output

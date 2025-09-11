@@ -43,6 +43,10 @@ if [ "$changed" = true ]; then
     log "$(id nicotine)"
 fi
 
+# Ensure correct ownership of config and data directories
+log "Ensuring correct ownership of config and data directories..."
+chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local 2>/dev/null || true
+
 # Set the timezone if TZ is provided
 if [ -n "${TZ}" ]; then
     if [ -f "/usr/share/zoneinfo/${TZ}" ]; then

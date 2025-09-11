@@ -17,7 +17,8 @@ ENV PUID=1000 \
     GDK_BACKEND=broadway \
     BROADWAY_DISPLAY=:5 \
     NICOTINE_GTK_VERSION=4 \
-    NO_AT_BRIDGE=1
+    NO_AT_BRIDGE=1 \
+    NICOTINE_DATA_HOME=/home/nicotine/.local/share/nicotine
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
@@ -35,7 +36,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     fonts-noto-cjk \
     gettext \
     dbus-x11 \
-    nginx \
+    nginx-light \
     tzdata \
     locales \
     curl \
@@ -46,6 +47,9 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && useradd -u ${PUID} -g ${PGID} -m -s /bin/bash nicotine \
 # Create directories, symobolic links, and set permissions
     && mkdir -p /home/nicotine/.config/nicotine /home/nicotine/.local/share/nicotine/plugins \
+                /home/nicotine/.local/share/nicotine/downloads \
+                /home/nicotine/.local/share/nicotine/incomplete \
+                /home/nicotine/.local/share/nicotine/received \
     && ln -s /home/nicotine/.config/nicotine /config \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
@@ -54,7 +58,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
     && apt-get update \
-    && apt-get upgrade -y \
     && apt-get autoremove -y \
     && apt-get autoclean \
     && rm -rf /var/lib/apt/lists/* \

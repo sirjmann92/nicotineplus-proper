@@ -63,10 +63,10 @@ Included in image
 
 ### Installation
 
-*   Create a directory named "config" on your local machine
-*   Inside the "config" directory, create a directory named "data"
-*   Map your local "config" directory to the "/config" directory in the container (see example)
-*   Map your local "data" directory to the "/data" directory in the container (see example)
+*   Map a local "config" directory to the "/config" directory in the container (see example)
+*   Map a local "data" directory to the "/data" directory in the container (see example)
+    * Downloads directories will be created inside the /data directory by default.
+    * For custom download directories, create a volume mapping (see example), then select the mapped volume in the Nicotine+ settings menu.
 *   FOR CUSTOM PLUGINS: A "plugins" directory will be created automatically under the /data directory (/data/plugins) if it doesn't exist at container startup. Place your custom plugins here to use them in Nictotine+.
 *   When setting a different locale, only LANG is required. LC_ALL and LANGUAGE will be updated by internal scripts. The Language setting in Nicotine+ will still need to be set manually by the user.
 
