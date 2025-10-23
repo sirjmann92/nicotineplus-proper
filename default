@@ -39,5 +39,9 @@ server {
         sub_filter "<title>" "<dummy>";
         sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
         sub_filter "broadway 2.0" "";
+
+        # Authentication (will be uncommented if credentials are provided)
+        # auth_basic "Restricted";
+        # auth_basic_user_file /etc/nginx/.htpasswd;
     }
 }
