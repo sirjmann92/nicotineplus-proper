@@ -20,6 +20,7 @@ Features
 *   NEW! Now available for both x86/amd64 and arm64 architectures
 *   Port config override (for dynamic VPN forwarded ports)
 *   Custom WebUI port
+*   Authentication for Custom WebUI
 *   UID/GID assignment
 *   Time zone and locale (no locale on Alpine based images)
 *   UMASK support
@@ -134,6 +135,8 @@ Docker Compose Example
       #   - NOTIFY_MENTION=False
       #   - FORWARD_PORT=12345 # Useful for dynamic port forwarding
       #   - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
+      #   - WEB_UI_USER=YourWebUIUsername # for custom webUI basic auth username
+      #   - WEB_UI_PASSWORD=YourWebUIPassword # for custom webUI basic auth password
        volumes:
          - /your/downloads/directory:/downloads
          - /your/share/directory:/shared
@@ -161,6 +164,8 @@ Docker Run Example
         //-e UMASK=022 \
         //-e FORWARD_PORT=12345 \
         //-e WEB_UI_PORT=6565 \
+        //-e WEB_UI_USERNAME=YourWebUIUsername \
+        //-e WEB_UI_PASSWORD=YourWebUIPassword \
         -p 6565:6565 \
         -p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
