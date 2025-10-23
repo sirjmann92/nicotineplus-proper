@@ -11,6 +11,12 @@ if [ "$WEB_UI_PORT" != "6565" ]; then
 fi
 sed -i "s/__PORT__/$WEB_UI_PORT/g" /etc/nginx/sites-available/default
 
+if [ "$WEB_UI_USER" ] && [ "$WEB_UI_PASSWORD" ]; then
+    log "Setting up HTTP Basic Authentication for NGINX..."
+    htpasswd -bc /etc/nginx/.htpasswd "$WEB_UI_USER" "$WEB_UI_PASSWORD"
+    sed -i 's/# auth/auth/g' /etc/nginx/sites-available/default
+fi
+
 # Start NGINX server
 log "Starting NGINX server..."
 nginx > >(while IFS= read -r line; do log "$line"; done) 2>&1 &

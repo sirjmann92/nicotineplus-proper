@@ -41,6 +41,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     locales \
     curl \
     wget \
+    apache2-utils \
 # Delete default ubuntu user claiming 1000:1000, create nicotine user and group
     && userdel -r ubuntu \
     && groupadd -g ${PGID} nicotine \
