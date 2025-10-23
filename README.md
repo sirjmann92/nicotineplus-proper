@@ -164,7 +164,7 @@ Docker Run Example
         //-e UMASK=022 \
         //-e FORWARD_PORT=12345 \
         //-e WEB_UI_PORT=6565 \
-        //-e WEB_UI_USERNAME=YourWebUIUsername \
+        //-e WEB_UI_USER=YourWebUIUsername \
         //-e WEB_UI_PASSWORD=YourWebUIPassword \
         -p 6565:6565 \
         -p 2234:2234 \
