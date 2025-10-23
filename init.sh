@@ -11,6 +11,7 @@ if [ "$WEB_UI_PORT" != "6565" ]; then
 fi
 sed -i "s/__PORT__/$WEB_UI_PORT/g" /etc/nginx/sites-available/default
 
+# Check if http basic auth user/password env var are configured
 if [ "$WEB_UI_USER" ] && [ "$WEB_UI_PASSWORD" ]; then
     log "Setting up HTTP Basic Authentication for NGINX..."
     htpasswd -bc /etc/nginx/.htpasswd "$WEB_UI_USER" "$WEB_UI_PASSWORD"
