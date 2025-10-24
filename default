@@ -60,6 +60,7 @@ server {
         sub_filter "<title>" "<dummy>";
         sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
         sub_filter "broadway 2.0" "";
+        sub_filter "</head>" "<script>document.addEventListener('keydown',function(e){if(e.key==='F5'||e.key==='F12'||(e.ctrlKey&&e.key==='r')){e.stopPropagation();}},true);</script></head>";
 
         # Authentication (will be uncommented if credentials are provided)
         # auth_basic "Restricted";
