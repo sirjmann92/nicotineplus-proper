@@ -40,29 +40,30 @@ Features
         * This is true for the GTK3 images too, no copy/paste, this is an upstream issue
 
 Image variants:
------------------
+---------------
 
-### Latest Version (tag: latest)
+#### Latest Version (tag: latest)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ stable using GTK4
 
-### Latest Test Version (tag: test)
+#### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
 
-### GTK 3 Version (tag: gtk3)
+#### GTK 3 Version (tag: gtk3)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ using GTK 3
 
-### GTK 3 Test Version (tag: gtk3-test)
+#### GTK 3 Test Version (tag: gtk3-test)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev branch using GTK 3
 
-### Installation
+Installation
+------------
 
 *   Map a local "config" directory to the "/config" directory in the container (see example)
 *   Map a local "data" directory to the "/data" directory in the container (see example)
@@ -85,7 +86,8 @@ Image variants:
 *   Make any necessary changes to the script, then save it for future use
 *   Copy and paste the script into your CLI from the parent directory of the "config" directory you created above
 
-#### NOTES
+NOTES
+-----
 
 *   On first run, if there is no previous config found, a default config will be imported before writing environment variables.
 *   IMPORTANT: Make sure the PUID and PGID you use match your host's UID and GID, otherwise you may end up with permission issues
@@ -172,7 +174,8 @@ Docker Run Example
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
 
-### Important Note About Reverse Proxies and WebSockets
+Important Note About Reverse Proxies and WebSockets
+---------------------------------------------------
 
 **The container is pre-configured to handle WebSocket connections properly when accessed directly.** However, if you're using a reverse proxy (Nginx Proxy Manager, Traefik, Caddy, etc.) in front of this container, **you must configure your reverse proxy to handle WebSocket connections**, otherwise the Broadway interface will disconnect after a few minutes.
 
