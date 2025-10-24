@@ -9,6 +9,58 @@ For more information, head to the [official Nicotine+ website](https://nicotine-
   
 This is a Nicotine+ Docker image, using port 6565 (by default) to access Nicotine+ in a browser using the Broadway back end of GTK as the display server. This makes the image extremely small, lightweight, and fast, because it has less complications and dependencies. This also means there is no authentication available to access the application (as there would be with noVNC). If you plan to use this remotely as part of your self-hosted setup, you'll need to use something like Authentik or Authelia to provide the authenticaion layer. Alternatively, you could use a self-hosted VPN server and access the application externally as if you're on the local network. These items are outside the scope of this project but I wanted to provide alternatives if you need to access the application while you're away from your local network.
 
+### Important Note About Reverse Proxies and WebSockets
+
+**The container is pre-configured to handle WebSocket connections properly when accessed directly.** However, if you're using a reverse proxy (Nginx Proxy Manager, Traefik, Caddy, etc.) in front of this container, **you must configure your reverse proxy to handle WebSocket connections**, otherwise the Broadway interface will disconnect after a few minutes.
+
+This is a limitation of how WebSockets work through multiple proxy layers - each proxy in the chain must be configured to maintain the WebSocket connection. The container's internal nginx is already configured correctly, but your external reverse proxy needs WebSocket support enabled as well.
+
+#### Why This Is Necessary
+
+Broadway (the GTK display backend) uses WebSockets to maintain a live connection between your browser and the application. When you access the container directly, everything works seamlessly. However, when you add a reverse proxy:
+
+- **Without WebSocket config**: The reverse proxy treats the connection as a regular HTTP request and may time out idle connections (typically after 3 minutes)
+- **With WebSocket config**: The reverse proxy properly upgrades the connection and maintains it indefinitely
+
+#### Reverse Proxy Configuration Examples
+
+**Nginx Proxy Manager / Nginx** - Add to "Advanced" tab or custom location:
+```nginx
+location /socket {
+    proxy_pass http://container-ip:6565/socket;
+    proxy_http_version 1.1;
+    proxy_set_header Upgrade $http_upgrade;
+    proxy_set_header Connection "upgrade";
+    proxy_set_header Host $host;
+    proxy_read_timeout 86400;
+    proxy_send_timeout 86400;
+    proxy_buffering off;
+    proxy_request_buffering off;
+    proxy_cache_bypass $http_upgrade;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+}
+```
+
+**Traefik** - Add these labels to your docker-compose:
+```yaml
+labels:
+  - "traefik.http.routers.nicotine.middlewares=nicotine-headers"
+  - "traefik.http.middlewares.nicotine-headers.headers.customrequestheaders.Connection=upgrade"
+  - "traefik.http.middlewares.nicotine-headers.headers.customrequestheaders.Upgrade=websocket"
+```
+
+**Caddy** - Add to your Caddyfile:
+```
+your.domain.com {
+    reverse_proxy /socket* container-ip:6565 {
+        flush_interval -1
+    }
+    reverse_proxy container-ip:6565
+}
+```
+
+If you're using an authentication proxy like Authentik or Authelia, the WebSocket configuration must be applied to the reverse proxy that sits in front of the authentication layer, not within the authentication proxy itself.
+
 Because the application renders natively in a browser when using the Broadway back end of GTK, certain features and UI elements are not needed (e.g. window control buttons). The Nicotine+ developers were kind enough to create an isolated mode for this project. This creates a more native browser-based experience by removing links and references to external applications and websites, among other things. All of my images now run in isolated mode.
 
 This image is inspired by 33masterman33's clone of freddywullockx's Nicotine+ Docker image. Since the original release that was built on top of the aforementioned images, I've rebuilt the image from scratch, with expanded features and complexity. This is now a completely unique project, but loads of credit should still be given to freddywullockx and 33masterman33 for the inspiration and concept.
