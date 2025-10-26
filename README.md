@@ -17,10 +17,9 @@ You can also find this project [on the Docker Hub](https://hub.docker.com/r/sirj
 
 Features
 -----------------
-*   NEW! Now available for both x86/amd64 and arm64 architectures
-*   Port config override (for dynamic VPN forwarded ports)
+*   NEW! Optional HTTP Basic Auth
+*   Available for both x86/amd64 and arm64 architectures
 *   Custom WebUI port
-*   Authentication for Custom WebUI
 *   UID/GID assignment
 *   Time zone and locale (no locale on Alpine based images)
 *   UMASK support
