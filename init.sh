@@ -54,6 +54,11 @@ fi
 log "Ensuring correct ownership of config and data directories..."
 chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local 2>/dev/null || true
 
+# Ensure cache directory exists with correct permissions for Broadway socket
+mkdir -p /home/nicotine/.cache
+chown nicotine:nicotine /home/nicotine/.cache
+chmod 755 /home/nicotine/.cache
+
 # Set the timezone if TZ is provided
 if [ -n "${TZ}" ]; then
     if [ -f "/usr/share/zoneinfo/${TZ}" ]; then

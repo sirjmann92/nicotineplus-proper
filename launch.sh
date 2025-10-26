@@ -44,9 +44,18 @@ else
     log "Received directory exists, skipping setup..."
 fi
 
+# Temporarily set umask to 022 for Broadway socket creation
+# This ensures the socket file has correct permissions even if user sets restrictive UMASK
+original_umask=$(umask)
+umask 022
+
 # Start Broadway daemon and log output
 log "Starting Broadway daemon..."
 gtk4-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
+
+# Wait a moment for socket to be created, then restore original umask
+sleep 1
+umask "$original_umask"
 
 # Define config file paths
 CONFIG_FILE="/home/nicotine/.config/nicotine/config"
