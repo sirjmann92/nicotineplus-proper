@@ -109,7 +109,7 @@ Docker Compose Example
     ---
     services: 
      nicotineplus-proper:
-       image: 'sirjmann92/nicotineplus-proper:latest'
+       image: 'sirjmann92/nicotineplus-proper:latest' # Or pull from GitHub: 'ghcr.io/sirjmann92/nicotineplus-proper:latest'
        container_name: nicotine
     #  network_mode: "container:YourVPNContainerNameHere" # Comment this line out if you're NOT using a VPN container
        ports: # Comment this line out if you ARE using a VPN container (line above)
@@ -170,6 +170,7 @@ Docker Run Example
         -p 6565:6565 \
         -p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
+        // or pull from GitHub: 'ghcr.io/sirjmann92/nicotineplus-proper:latest'
 
 You can access your Nicotine+ WebUI with http://your.server.ip.here:6565 (e.g. http://192.168.1.555:6565)
 
