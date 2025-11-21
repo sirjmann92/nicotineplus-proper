@@ -1,3 +1,6 @@
 build-latest.sh
 build-push-latest.sh
 build-deploy-nicotine.sh
+
+# Local instructions and notes
+HEALTHCHECK_UPDATE_INSTRUCTIONS.md
