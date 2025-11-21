@@ -70,6 +70,14 @@ COPY default /etc/nginx/sites-available/default
 COPY favicon.ico /var/www/favicon.ico
 COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
+COPY healthcheck.sh /usr/local/bin/healthcheck.sh
+
+# Make healthcheck script executable
+RUN chmod +x /usr/local/bin/healthcheck.sh
+
+# Add healthcheck
+HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
+    CMD ["/usr/local/bin/healthcheck.sh"]
 
 # Run Nicotine+ startup script
 CMD ["init.sh"]

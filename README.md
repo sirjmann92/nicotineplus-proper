@@ -138,6 +138,7 @@ Docker Compose Example
       #   - WEB_UI_PORT=6565 # for custom webUI port assignment. Should match 'port' env variable or VPN webUI port
       #   - WEB_UI_USER=YourWebUIUsername # for custom webUI basic auth username
       #   - WEB_UI_PASSWORD=YourWebUIPassword # for custom webUI basic auth password
+      #   - HEALTHCHECK_ENABLED=false # Set to false to disable Docker healthcheck (default: true/enabled)
        volumes:
          - /your/downloads/directory:/downloads
          - /your/share/directory:/shared
@@ -167,6 +168,7 @@ Docker Run Example
         //-e WEB_UI_PORT=6565 \
         //-e WEB_UI_USER=YourWebUIUsername \
         //-e WEB_UI_PASSWORD=YourWebUIPassword \
+        //-e HEALTHCHECK_ENABLED=false \
         -p 6565:6565 \
         -p 2234:2234 \
         sirjmann92/nicotineplus-proper:latest
