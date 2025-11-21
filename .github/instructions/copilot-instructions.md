@@ -148,11 +148,11 @@ Since this is a Docker project, testing involves:
 
 ### Common Pitfalls to Avoid
 
-1. **Don't break Broadway WebSocket support**: The NGINX config must maintain WebSocket upgrade headers
-2. **Don't change default port assumptions**: Many users rely on port 6565 and 2234
-3. **Don't remove the isolated mode flag**: Nicotine+ runs with `--isolated` for this use case
-4. **Don't modify user's existing config values**: Only update from environment variables
-5. **Don't assume UID 1000 is always available**: The Dockerfile deletes the ubuntu user claiming 1000:1000
+1. **Don't break Broadway WebSocket support**: The NGINX config must maintain WebSocket upgrade headers (see [NGINX Configuration](#nginx-configuration))
+2. **Don't change default port assumptions**: Many users rely on port 6565 and 2234 (see [Environment Variables](#environment-variables))
+3. **Don't remove the isolated mode flag**: Nicotine+ runs with `--isolated` for this use case (see launch.sh)
+4. **Don't modify user's existing config values**: Only update from environment variables (see [Configuration Management](#development-guidelines))
+5. **Don't assume UID 1000 is always available**: The Dockerfile deletes the ubuntu user claiming 1000:1000 (see [Maintain Permissions](#development-guidelines))
 
 ### File Modification Guidelines
 
@@ -196,7 +196,20 @@ Since this is a Docker project, testing involves:
 
 ## Resources
 
+### Official Documentation
 - Nicotine+ Official: https://nicotine-plus.org
+- Nicotine+ GitHub: https://github.com/nicotine-plus/nicotine-plus
 - GTK Broadway Documentation: https://docs.gtk.org/gtk4/broadway.html
+- Ubuntu 24.04 Base Image: https://hub.docker.com/_/ubuntu
+
+### Project Links
 - Project Docker Hub: https://hub.docker.com/r/sirjmann92/nicotineplus-proper
-- Base Image: Ubuntu 24.04 official image
+- Project GitHub: https://github.com/sirjmann92/nicotineplus-proper
+
+### Technology References
+- Docker Best Practices: https://docs.docker.com/develop/dev-best-practices/
+- Docker Dockerfile Reference: https://docs.docker.com/engine/reference/builder/
+- NGINX Documentation: https://nginx.org/en/docs/
+- NGINX WebSocket Proxying: https://nginx.org/en/docs/http/websocket.html
+- Bash Guide: https://mywiki.wooledge.org/BashGuide
+- Advanced Bash-Scripting Guide: https://tldp.org/LDP/abs/html/
