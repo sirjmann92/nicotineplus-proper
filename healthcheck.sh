@@ -19,7 +19,7 @@ if ! pgrep -x nginx > /dev/null 2>&1; then
 fi
 
 # Check if Broadway process is running
-# gtk4-broadwayd for GTK4, gtk3-broadwayd for GTK3
+# gtk4-broadwayd for GTK4, broadwayd for GTK3
 if ! pgrep -x gtk4-broadwayd > /dev/null 2>&1 && ! pgrep -x broadwayd > /dev/null 2>&1; then
     echo "Healthcheck failed: Broadway process not running"
     exit 1
