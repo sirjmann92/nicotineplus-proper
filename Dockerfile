@@ -34,6 +34,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
+    fonts-noto-color-emoji \
     gettext \
     dbus-x11 \
     nginx-light \
