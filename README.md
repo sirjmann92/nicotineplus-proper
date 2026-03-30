@@ -200,6 +200,8 @@ location /socket {
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
     proxy_set_header Host $host;
+    proxy_set_header Cookie "";
+    proxy_set_header Origin "";
     proxy_read_timeout 86400;
     proxy_send_timeout 86400;
     proxy_buffering off;
@@ -228,6 +230,8 @@ your.domain.com {
 ```
 
 If you're using an authentication proxy like Authentik or Authelia, the WebSocket configuration must be applied to the reverse proxy that sits in front of the authentication layer, not within the authentication proxy itself.
+
+> **Important:** If your auth proxy (Authentik, Authelia, Keycloak + oauth2-proxy, etc.) stores sessions as cookies, the browser will send that session cookie with every request to your domain — including the WebSocket upgrade to `/socket`. The container's internal nginx has a default header buffer limit of 8k per line, and a JWT session cookie from an OIDC provider can easily exceed this, causing a **400 Bad Request** that kills the WebSocket connection before it ever reaches Broadway. The fix is to strip the cookie in your `/socket` location block, which is why `proxy_set_header Cookie "";` is included in the nginx example above. Broadway does not use cookies, so this has no functional impact.
 
 Updating Nicotine+ (OPTIONAL)
 -----------------------------
