@@ -35,9 +35,9 @@ Features
 *   There are known issues with GTK4 and Broadway that can't be fixed by this image, use the GTK3 image if these bother you:
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
-*   Clipboard management (copy/paste between host and container) doesn’t work with the upstream Broadway backend (GTK4 or GTK3) — there is no official fix yet
+*   Clipboard management (copy/paste between host and container) doesn't work with the upstream Broadway backend (GTK4 or GTK3) - there is no official fix yet
     *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
-    *   Because this affects GTK3 as well, switching to the GTK3 images won’t resolve the clipboard limitation
+    *   Because this affects GTK3 as well, switching to the GTK3 images won't resolve the clipboard limitation
 
 Image variants:
 ---------------
