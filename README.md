@@ -35,9 +35,9 @@ Features
 *   There are known issues with GTK4 and Broadway that can't be fixed by this image, use the GTK3 image if these bother you:
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
-*   Clipboard management (copy/paste between host and container) doesn’t work with the upstream Broadway backend (GTK4 or GTK3) — there is no official fix yet
-        *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
-        *   Because this affects GTK3 as well, switching to the GTK3 images won’t resolve the clipboard limitation
+*   Clipboard management (copy/paste between host and container) doesn't work with the upstream Broadway backend (GTK4 or GTK3) - there is no official fix yet
+    *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
+    *   Because this affects GTK3 as well, switching to the GTK3 images won't resolve the clipboard limitation
 
 Image variants:
 ---------------
@@ -52,10 +52,10 @@ Image variants:
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
 *   **Experimental: bi-directional clipboard support** (copy/paste between host and container)
-    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) — not yet part of upstream GTK
+    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) - not yet part of upstream GTK
     *   Works in both directions: Ctrl+C/V, right-click copy/paste, and custom copy actions
     *   Tested on Firefox and Chromium (desktop); partial support on Android
-    *   This is a proof-of-concept — please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
+    *   This is a proof-of-concept - please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
 
 #### GTK 3 Version (tag: gtk3)
 
@@ -214,11 +214,11 @@ location /socket {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 ```
-> **Important:** If your auth proxy (Authentik, Authelia, Keycloak + oauth2-proxy, etc.) stores sessions as cookies, the browser will send that session cookie with every request to your domain — including the WebSocket upgrade to `/socket`. The container's internal nginx has a default header buffer limit of 8k per line, and a JWT session cookie from an OIDC provider can easily exceed this, causing a **400 Bad Request** that kills the WebSocket connection before it ever reaches Broadway. The fix is to strip the cookie in your `/socket` location block with `proxy_set_header Cookie "";`. In this case, you may need to use the following nginx config to resolve the issue, instead:
+> **Important:** If your auth proxy (Authentik, Authelia, Keycloak + oauth2-proxy, etc.) stores sessions as cookies, the browser will send that session cookie with every request to your domain - including the WebSocket upgrade to `/socket`. The container's internal nginx has a default header buffer limit of 8k per line, and a JWT session cookie from an OIDC provider can easily exceed this, causing a **400 Bad Request** that kills the WebSocket connection before it ever reaches Broadway. The fix is to strip the cookie in your `/socket` location block with `proxy_set_header Cookie "";`. In this case, you may need to use the following nginx config to resolve the issue, instead:
 
 ```nginx
 location /socket {
-    proxy_pass http://vpn:6565/socket;
+    proxy_pass http://container-ip:6565/socket;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
