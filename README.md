@@ -35,8 +35,9 @@ Features
 *   There are known issues with GTK4 and Broadway that can't be fixed by this image, use the GTK3 image if these bother you:
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
-    *   No clipboard management (copy/paste from out->in or in->out of the image won't work)
-        * This is true for the GTK3 images too, no copy/paste, this is an upstream issue
+*   Clipboard management (copy/paste between host and container) doesn’t work with the upstream Broadway backend (GTK4 or GTK3) — there is no official fix yet
+        *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
+        *   Because this affects GTK3 as well, switching to the GTK3 images won’t resolve the clipboard limitation
 
 Image variants:
 ---------------
@@ -50,6 +51,11 @@ Image variants:
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
+*   **Experimental: bi-directional clipboard support** (copy/paste between host and container)
+    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) — not yet part of upstream GTK
+    *   Works in both directions: Ctrl+C/V, right-click copy/paste, and custom copy actions
+    *   Tested on Firefox and Chromium (desktop); partial support on Android
+    *   This is a proof-of-concept — please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
 
 #### GTK 3 Version (tag: gtk3)
 
