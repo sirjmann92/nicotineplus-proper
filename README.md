@@ -52,10 +52,10 @@ Image variants:
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
 *   **Experimental: bi-directional clipboard support** (copy/paste between host and container)
-    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) — not yet part of upstream GTK
+    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) - not yet part of upstream GTK
     *   Works in both directions: Ctrl+C/V, right-click copy/paste, and custom copy actions
     *   Tested on Firefox and Chromium (desktop); partial support on Android
-    *   This is a proof-of-concept — please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
+    *   This is a proof-of-concept - please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
 
 #### GTK 3 Version (tag: gtk3)
 
@@ -214,7 +214,7 @@ location /socket {
     proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
 }
 ```
-> **Important:** If your auth proxy (Authentik, Authelia, Keycloak + oauth2-proxy, etc.) stores sessions as cookies, the browser will send that session cookie with every request to your domain — including the WebSocket upgrade to `/socket`. The container's internal nginx has a default header buffer limit of 8k per line, and a JWT session cookie from an OIDC provider can easily exceed this, causing a **400 Bad Request** that kills the WebSocket connection before it ever reaches Broadway. The fix is to strip the cookie in your `/socket` location block with `proxy_set_header Cookie "";`. In this case, you may need to use the following nginx config to resolve the issue, instead:
+> **Important:** If your auth proxy (Authentik, Authelia, Keycloak + oauth2-proxy, etc.) stores sessions as cookies, the browser will send that session cookie with every request to your domain - including the WebSocket upgrade to `/socket`. The container's internal nginx has a default header buffer limit of 8k per line, and a JWT session cookie from an OIDC provider can easily exceed this, causing a **400 Bad Request** that kills the WebSocket connection before it ever reaches Broadway. The fix is to strip the cookie in your `/socket` location block with `proxy_set_header Cookie "";`. In this case, you may need to use the following nginx config to resolve the issue, instead:
 
 ```nginx
 location /socket {
