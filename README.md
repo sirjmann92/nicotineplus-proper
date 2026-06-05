@@ -52,10 +52,10 @@ Image variants:
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
 *   **Experimental: bi-directional clipboard support** (copy/paste between host and container)
-    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) — not yet part of upstream GTK
+    *   Powered by a patched GTK4 Broadway backend ([droserasprout/gtk-broadway](https://github.com/droserasprout/gtk-broadway)) - not yet part of upstream GTK
     *   Works in both directions: Ctrl+C/V, right-click copy/paste, and custom copy actions
     *   Tested on Firefox and Chromium (desktop); partial support on Android
-    *   This is a proof-of-concept — please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
+    *   This is a proof-of-concept - please report any issues you encounter [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
 
 #### GTK 3 Version (tag: gtk3)
 
