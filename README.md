@@ -36,8 +36,8 @@ Features
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
 *   Clipboard management (copy/paste between host and container) doesn’t work with the upstream Broadway backend (GTK4 or GTK3) — there is no official fix yet
-        *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
-        *   Because this affects GTK3 as well, switching to the GTK3 images won’t resolve the clipboard limitation
+    *   **Experimental clipboard support is being tested in the `test` tag** (see below). If you want to try it and report issues, pull `sirjmann92/nicotineplus-proper:test`
+    *   Because this affects GTK3 as well, switching to the GTK3 images won’t resolve the clipboard limitation
 
 Image variants:
 ---------------
@@ -218,7 +218,7 @@ location /socket {
 
 ```nginx
 location /socket {
-    proxy_pass http://vpn:6565/socket;
+    proxy_pass http://container-ip:6565/socket;
     proxy_http_version 1.1;
     proxy_set_header Upgrade $http_upgrade;
     proxy_set_header Connection "upgrade";
