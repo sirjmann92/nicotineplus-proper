@@ -17,8 +17,8 @@ You can also find this project [on the Docker Hub](https://hub.docker.com/r/sirj
 
 Features
 -----------------
-*   NEW! Clipboard support (copy/paste between host and container) — see `test` tag below
-*   NEW! Touch support — selection handles, on-screen keyboard, pinch-to-zoom, Android support
+*   NEW! Clipboard support — bi-directional copy/paste between host and container (GTK4 images)
+*   NEW! Touch support — selection handles, on-screen keyboard, pinch-to-zoom, Android support (GTK4 images)
 *   NEW! Optional HTTP Basic Auth
 *   Available for both x86/amd64 and arm64 architectures
 *   Custom WebUI port
@@ -37,8 +37,8 @@ Features
 *   There are known issues with GTK4 and Broadway that can't be fixed by this image, use the GTK3 image if these bother you:
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
-*   Clipboard (copy/paste) and touch support are not available in the upstream Broadway backend (GTK4 or GTK3) — these are resolved in the `test` tag via a patched GTK4 build (see below)
-    *   The GTK3 images are not affected by these improvements and will not receive them
+*   Clipboard and touch support are not available in the upstream Broadway backend and are not part of the GTK3 images
+    *   Both the `latest` and `test` GTK4 tags include these features via [gtk-brotway](https://github.com/droserasprout/gtk-brotway), a patched GTK4 Broadway backend — big thanks to [droserasprout](https://github.com/droserasprout) for this contribution!
 
 Image variants:
 ---------------
@@ -47,19 +47,21 @@ Image variants:
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ stable using GTK4
+*   Includes [gtk-brotway](https://github.com/droserasprout/gtk-brotway) — a patched GTK4 Broadway backend adding:
+    *   **Clipboard** — bi-directional copy/paste between host and container (Ctrl+C/V, right-click, custom copy actions)
+    *   **Touch support** — selection handles, Cut/Copy/Paste bubble, on-screen keyboard, IME/non-Latin input (Cyrillic, CJK, autocorrect)
+    *   **Pinch-to-zoom** — two-finger UI zoom (0.25×–5×), crisp re-render, persists across refreshes
+    *   **Auto-reconnect** — survives screen-off, network changes, and slow links
+    *   **Link opening** — clicked links open in a new browser tab
+    *   Tested on Firefox and Chromium (desktop) and Android (Firefox, Chrome)
 
 #### Latest Test Version (tag: test)
 
 *   Official Ubuntu 24.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
-*   Includes a patched GTK4 Broadway backend ([gtk-brotway](https://github.com/droserasprout/gtk-brotway)) that resolves long-standing Broadway limitations:
-    *   **Clipboard** — bi-directional copy/paste between host and container (Ctrl+C/V, right-click, custom copy actions)
-    *   **Touch support** — selection handles, Cut/Copy/Paste bubble, on-screen keyboard, IME/non-Latin input (Cyrillic, CJK, autocorrect)
-    *   **Pinch-to-zoom** — two-finger UI zoom (0.25×–5×), crisp re-render, persists across refreshes
-    *   **Auto-reconnect** — survives screen-off, network changes, and slow links without losing your session
-    *   **Link opening** — clicked links open in a new browser tab
-    *   Tested on Firefox and Chromium (desktop) and Android (Firefox, Chrome)
-    *   These features are not yet part of upstream GTK — please report any issues [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
+*   Includes all the same [gtk-brotway](https://github.com/droserasprout/gtk-brotway) features as the `latest` tag, but with the latest unstable Nicotine+ build
+    *   Use this tag if you want to test upcoming Nicotine+ features alongside the Broadway improvements
+    *   Please report any issues [here](https://github.com/sirjmann92/nicotineplus-proper/issues)
 
 #### GTK 3 Version (tag: gtk3)
 
