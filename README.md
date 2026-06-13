@@ -19,7 +19,7 @@ Features
 -----------------
 *   NEW! Clipboard support — bi-directional copy/paste between host and container (GTK4 images)
 *   NEW! Touch support — selection handles, on-screen keyboard, pinch-to-zoom, Android support (GTK4 images)
-*   NEW! Optional HTTP Basic Auth
+*   Optional HTTP Basic Auth
 *   Available for both x86/amd64 and arm64 architectures
 *   Custom WebUI port
 *   UID/GID assignment
@@ -53,7 +53,6 @@ Image variants:
     *   **Pinch-to-zoom** — two-finger UI zoom (0.25×–5×), crisp re-render, persists across refreshes
     *   **Auto-reconnect** — survives screen-off, network changes, and slow links
     *   **Link opening** — clicked links open in a new browser tab
-    *   Tested on Firefox and Chromium (desktop) and Android (Firefox, Chrome)
 
 #### Latest Test Version (tag: test)
 
