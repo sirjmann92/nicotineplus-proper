@@ -1,4 +1,4 @@
-FROM ubuntu:24.04
+FROM ubuntu:26.04 AS base
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Set environment variables
@@ -68,7 +68,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Import configuration files and launch scripts
 COPY config-default /home/nicotine/config-default
 COPY default /etc/nginx/sites-available/default
-COPY favicon.ico /var/www/favicon.ico
 COPY init.sh /usr/local/bin/init.sh
 COPY launch.sh /usr/local/bin/launch.sh
 COPY healthcheck.sh /usr/local/bin/healthcheck.sh
@@ -82,3 +81,21 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 
 # Run Nicotine+ startup script
 CMD ["init.sh"]
+
+# Install the patched GTK Broadway library (Brotway) from a prebuilt .deb.
+FROM base
+ARG DEBIAN_FRONTEND=noninteractive
+ARG BROTWAY_RELEASE=v3.1.1
+ARG GTK_VERSION=4.22.4
+ENV LD_LIBRARY_PATH=/usr/lib/gtk4-brotway
+RUN set -eux; \
+    apt-get update; \
+    apt-get install -y --no-install-recommends ca-certificates wget; \
+    arch="$(dpkg --print-architecture)"; \
+    deb="gtk4-brotway_${GTK_VERSION}-${BROTWAY_RELEASE#v}_${arch}.deb"; \
+    url="https://github.com/droserasprout/gtk-brotway/releases/download/${BROTWAY_RELEASE}/${deb}"; \
+    wget -O "/tmp/${deb}" "${url}"; \
+    apt-get install -y --no-install-recommends "/tmp/${deb}"; \
+    rm -f "/tmp/${deb}"; \
+    apt-get clean; \
+    rm -rf /var/lib/apt/lists/*

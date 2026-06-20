@@ -2,14 +2,6 @@ server {
     listen __PORT__;
     server_name localhost;
 
-    root /var/www/;
-
-    location = /favicon.ico {
-        alias /var/www/favicon.ico;
-        expires 30d;
-        access_log off;
-    }
-
     ###################################
     # WebSocket endpoint for Broadway
     # (External reverse proxies should target this path)
@@ -31,7 +23,7 @@ server {
     }
 
     ###################################
-    # Normal HTTP for Broadway + favicon injection
+    # Normal HTTP for Broadway
     ###################################
     location / {
         proxy_pass http://localhost:8085/;
@@ -54,12 +46,9 @@ server {
         add_header X-Content-Type-Options nosniff always;
         add_header X-XSS-Protection "1; mode=block" always;
 
-        # Substitution filters for favicon
-        sub_filter_types text/html text/plain;
-        sub_filter_once off;
-        sub_filter "<title>" "<dummy>";
-        sub_filter "</title>" "</dummy><title>Nicotine+</title><link rel=\"icon\" href=\"favicon.ico\" type=\"image/x-icon\">";
-        sub_filter "broadway 2.0" "";
+        # Let native reload / devtools keys reach the browser instead of the app
+        sub_filter_types text/html;
+        sub_filter_once on;
         sub_filter "</head>" "<script>document.addEventListener('keydown',function(e){if(e.key==='F5'||e.key==='F12'||(e.ctrlKey&&e.key==='r')){e.stopPropagation();}},true);</script></head>";
 
         # Authentication (will be uncommented if credentials are provided)
