@@ -1,5 +1,11 @@
+<<<<<<< Updated upstream
 FROM ubuntu:26.04 AS base
+=======
+FROM ubuntu:26.04
+>>>>>>> Stashed changes
 ARG DEBIAN_FRONTEND=noninteractive
+ARG BROTWAY_RELEASE=v3.1.1
+ARG GTK_VERSION=4.22.4
 
 # Set environment variables
 ENV PUID=1000 \
@@ -18,7 +24,8 @@ ENV PUID=1000 \
     BROADWAY_DISPLAY=:5 \
     NICOTINE_GTK_VERSION=4 \
     NO_AT_BRIDGE=1 \
-    NICOTINE_DATA_HOME=/home/nicotine/.local/share/nicotine
+    NICOTINE_DATA_HOME=/home/nicotine/.local/share/nicotine \
+    LD_LIBRARY_PATH=/usr/lib/gtk4-brotway
 
 # Expose port for the application
 EXPOSE ${WEB_UI_PORT}
@@ -29,7 +36,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     gir1.2-gtk-4.0 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
-    libgtk-4-bin \
     librsvg2-common \
     python3-gi \
     python3-gi-cairo \
@@ -59,11 +65,41 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Install Nicotine+ and cleanup
     && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
+# Install GTK Broadway fork (Brotway)
     && apt-get update \
+    && set -eux \
+    && arch="$(dpkg --print-architecture)" \
+    && deb="gtk4-brotway_${GTK_VERSION}-${BROTWAY_RELEASE#v}_${arch}.deb" \
+    && url="https://github.com/droserasprout/gtk-brotway/releases/download/${BROTWAY_RELEASE}/${deb}" \
+    && wget -O "/tmp/${deb}" "${url}" \
+    && apt-get install -y --no-install-recommends "/tmp/${deb}" \
+# Cleanup
+    && apt-get purge -y software-properties-common \
     && apt-get autoremove -y \
     && apt-get autoclean \
+# Force-remove duplicate stock GTK4 + its GL/Mesa/LLVM dependency chain.
+# Brotway provides its own copy of these libs at /usr/lib/gtk4-brotway
+# (loaded via LD_LIBRARY_PATH). The stock copies are pulled in transitively
+# by gir1.2-gtk-4.0/nicotine and are never actually used at runtime.
+# Using dpkg directly (not apt) avoids cascading removal of gir1.2-gtk-4.0,
+# libadwaita-1-0, and gtk4-brotway, which depend on these on paper but
+# don't need them present on disk.
+    && dpkg --purge --force-depends \
+    libgtk-4-1 \
+    libgtk-4-bin \
+    libgstreamer-gl1.0-0 \
+    libgl1 \
+    libglx0 \
+    libegl1 \
+    libgbm1 \
+    libgl1-mesa-dri \
+    libegl-mesa0 \
+    libglx-mesa0 \
+    mesa-libgallium \
+    libllvm21 \
     && rm -rf /var/lib/apt/lists/* \
-    && apt-get clean
+    /var/cache/apt/archives/*.deb \
+    "/tmp/${deb}"
 
 # Import configuration files and launch scripts
 COPY config-default /home/nicotine/config-default

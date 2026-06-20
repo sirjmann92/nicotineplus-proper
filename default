@@ -45,7 +45,10 @@ server {
         add_header X-Frame-Options SAMEORIGIN always;
         add_header X-Content-Type-Options nosniff always;
         add_header X-XSS-Protection "1; mode=block" always;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         # Let native reload / devtools keys reach the browser instead of the app
         sub_filter_types text/html;
         sub_filter_once on;
