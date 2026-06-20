@@ -49,9 +49,9 @@ fi
 original_umask=$(umask)
 umask 022
 
-# Start Broadway daemon and log output
+# Start Broadway daemon and log output.
 log "Starting Broadway daemon..."
-gtk4-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
+/usr/lib/gtk4-brotway/gtk4-broadwayd :5 > >(while IFS= read -r line; do log "$line"; done) 2>&1 &
 
 # Wait a moment for socket to be created, then restore original umask
 sleep 1
