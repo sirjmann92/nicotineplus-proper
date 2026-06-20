@@ -1,8 +1,4 @@
-<<<<<<< Updated upstream
-FROM ubuntu:26.04 AS base
-=======
 FROM ubuntu:26.04
->>>>>>> Stashed changes
 ARG DEBIAN_FRONTEND=noninteractive
 ARG BROTWAY_RELEASE=v3.1.1
 ARG GTK_VERSION=4.22.4
@@ -32,7 +28,7 @@ EXPOSE ${WEB_UI_PORT}
 
 # Install runtime dependencies and necessary packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    software-properties-common \
+    ca-certificates \
     gir1.2-gtk-4.0 \
     gir1.2-adw-1 \
     gir1.2-gspell-1 \
@@ -63,7 +59,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
 # Install Nicotine+ and cleanup
-    && add-apt-repository ppa:nicotine-team/stable \
+#    && add-apt-repository ppa:nicotine-team/stable \
     && apt-get install -y nicotine \
 # Install GTK Broadway fork (Brotway)
     && apt-get update \
@@ -97,9 +93,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglx-mesa0 \
     mesa-libgallium \
     libllvm21 \
-    && rm -rf /var/lib/apt/lists/* \
-    /var/cache/apt/archives/*.deb \
-    "/tmp/${deb}"
+    && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*.deb "/tmp/${deb}"
 
 # Import configuration files and launch scripts
 COPY config-default /home/nicotine/config-default
@@ -117,21 +111,3 @@ HEALTHCHECK --interval=30s --timeout=10s --start-period=60s --retries=3 \
 
 # Run Nicotine+ startup script
 CMD ["init.sh"]
-
-# Install the patched GTK Broadway library (Brotway) from a prebuilt .deb.
-FROM base
-ARG DEBIAN_FRONTEND=noninteractive
-ARG BROTWAY_RELEASE=v3.1.1
-ARG GTK_VERSION=4.22.4
-ENV LD_LIBRARY_PATH=/usr/lib/gtk4-brotway
-RUN set -eux; \
-    apt-get update; \
-    apt-get install -y --no-install-recommends ca-certificates wget; \
-    arch="$(dpkg --print-architecture)"; \
-    deb="gtk4-brotway_${GTK_VERSION}-${BROTWAY_RELEASE#v}_${arch}.deb"; \
-    url="https://github.com/droserasprout/gtk-brotway/releases/download/${BROTWAY_RELEASE}/${deb}"; \
-    wget -O "/tmp/${deb}" "${url}"; \
-    apt-get install -y --no-install-recommends "/tmp/${deb}"; \
-    rm -f "/tmp/${deb}"; \
-    apt-get clean; \
-    rm -rf /var/lib/apt/lists/*

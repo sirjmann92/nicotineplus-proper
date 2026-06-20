@@ -45,7 +45,7 @@ Image variants:
 
 #### Latest Version (tag: latest)
 
-*   Official Ubuntu 24.04 Base Image
+*   Official Ubuntu 26.04 Base Image
 *   Latest Nicotine+ stable using GTK4
 *   Includes [gtk-brotway](https://github.com/droserasprout/gtk-brotway) — a patched GTK4 Broadway backend adding:
     *   **Clipboard** — bi-directional copy/paste between host and container (Ctrl+C/V, right-click, custom copy actions)
@@ -56,7 +56,7 @@ Image variants:
 
 #### Latest Test Version (tag: test)
 
-*   Official Ubuntu 24.04 Base Image
+*   Official Ubuntu 26.04 Base Image
 *   Latest Nicotine+ RC/dev using GTK4
 *   Includes all the same [gtk-brotway](https://github.com/droserasprout/gtk-brotway) features as the `latest` tag, but with the latest unstable Nicotine+ build
     *   Use this tag if you want to test upcoming Nicotine+ features alongside the Broadway improvements
@@ -297,5 +297,3 @@ Building
 If you're interested in making modifications, or simply prefer to build your own image from the project files, you may download or clone the project and run the following from within the project directory:
 
         docker build -t yourImageName .
-        
-        
