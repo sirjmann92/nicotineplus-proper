@@ -1,5 +1,4 @@
-ARG UBUNTU_VERSION=26.04
-FROM ubuntu:${UBUNTU_VERSION} AS base
+FROM ubuntu:24.04
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Set environment variables
