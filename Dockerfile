@@ -35,6 +35,7 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     python3-gi \
     python3-gi-cairo \
     fonts-noto-cjk \
+    fonts-noto-color-emoji \
     gettext \
     dbus-x11 \
     nginx-light \
@@ -86,7 +87,7 @@ CMD ["init.sh"]
 # Install patched GTK Broadway library from prebuilt .deb
 FROM base
 ARG DEBIAN_FRONTEND=noninteractive
-ARG PATCH_RELEASE=v1
+ARG PATCH_RELEASE=v2.1
 RUN set -eux; \
     apt-get update; \
     apt-get install -y --no-install-recommends ca-certificates wget; \
