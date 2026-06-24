@@ -1,6 +1,6 @@
 FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
-ARG BROTWAY_RELEASE=v3.1.1
+ARG BROTWAY_RELEASE=v3.1.2
 ARG GTK_VERSION=4.22.4
 
 # Set environment variables
