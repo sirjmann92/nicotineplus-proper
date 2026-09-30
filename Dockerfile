@@ -58,12 +58,17 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && ln -s /home/nicotine/.local/share/nicotine /data \
     && ln -s /home/nicotine/.local/share/nicotine/plugins /data/plugins \
     && chown -R nicotine:nicotine /config /data /home/nicotine/.config /home/nicotine/.local /var/log \
-# Install Nicotine+ and cleanup
-#    && add-apt-repository ppa:nicotine-team/stable \
+# Add the Nicotine+ PPA (without software-properties-common) so the container
+# can pull new Nicotine+ releases via apt, then install Nicotine+
+    && set -eux \
+    && mkdir -p /etc/apt/keyrings \
+    && curl -fsSL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x6E60F93DCD3E27CBE2F0CCA16CEB6050A30E5769" \
+       -o /etc/apt/keyrings/nicotine-team.asc \
+    && printf 'Types: deb\nURIs: https://ppa.launchpadcontent.net/nicotine-team/stable/ubuntu\nSuites: %s\nComponents: main\nSigned-By: /etc/apt/keyrings/nicotine-team.asc\n' \
+       "$(. /etc/os-release && echo "${VERSION_CODENAME}")" > /etc/apt/sources.list.d/nicotine-team.sources \
+    && apt-get update \
     && apt-get install -y nicotine \
 # Install GTK Broadway fork (Brotway)
-    && apt-get update \
-    && set -eux \
     && arch="$(dpkg --print-architecture)" \
     && deb="gtk4-brotway_${GTK_VERSION}-${BROTWAY_RELEASE#v}_${arch}.deb" \
     && url="https://github.com/droserasprout/gtk-brotway/releases/download/${BROTWAY_RELEASE}/${deb}" \
@@ -80,6 +85,10 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 # Using dpkg directly (not apt) avoids cascading removal of gir1.2-gtk-4.0,
 # libadwaita-1-0, and gtk4-brotway, which depend on these on paper but
 # don't need them present on disk.
+# A stub package then "Provides" libgtk-4-1/libgtk-4-bin at the removed
+# version so apt's dependency state stays consistent and users can still
+# run apt upgrade inside the container.
+    && gtk_ver="$(dpkg-query -W -f='${Version}' libgtk-4-1)" \
     && dpkg --purge --force-depends \
     libgtk-4-1 \
     libgtk-4-bin \
@@ -93,6 +102,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libglx-mesa0 \
     mesa-libgallium \
     libllvm21 \
+    && mkdir -p /tmp/gtk4-stub/DEBIAN \
+    && printf 'Package: gtk4-brotway-stub\nVersion: 1.0\nArchitecture: all\nMaintainer: nicotineplus-proper\nProvides: libgtk-4-1 (= %s), libgtk-4-bin (= %s)\nDescription: Satisfies stock GTK4 deps (Brotway supplies GTK4)\n' \
+       "${gtk_ver}" "${gtk_ver}" > /tmp/gtk4-stub/DEBIAN/control \
+    && dpkg-deb --build /tmp/gtk4-stub /tmp/gtk4-stub.deb \
+    && dpkg -i /tmp/gtk4-stub.deb \
+    && apt-get check \
+    && rm -rf /tmp/gtk4-stub /tmp/gtk4-stub.deb \
     && rm -rf /var/lib/apt/lists/* /var/cache/apt/archives/*.deb "/tmp/${deb}"
 
 # Import configuration files and launch scripts
