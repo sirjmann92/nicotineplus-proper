@@ -1,6 +1,6 @@
 FROM ubuntu:26.04
 ARG DEBIAN_FRONTEND=noninteractive
-ARG BROTWAY_RELEASE=v3.1.3
+ARG BROTWAY_RELEASE=v3.2.0
 ARG GTK_VERSION=4.22.4
 
 # Set environment variables
@@ -17,7 +17,7 @@ ENV PUID=1000 \
     NOTIFY_MENTION=False \
     WEB_UI_PORT=6565 \
     GDK_BACKEND=broadway \
-    BROADWAY_DISPLAY=:5 \
+    BROTWAY_DISPLAY=:5 \
     NICOTINE_GTK_VERSION=4 \
     NO_AT_BRIDGE=1 \
     NICOTINE_DATA_HOME=/home/nicotine/.local/share/nicotine \

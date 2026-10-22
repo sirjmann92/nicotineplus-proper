@@ -37,6 +37,7 @@ Features
 *   There are known issues with GTK4 and Broadway that can't be fixed by this image, use the GTK3 image if these bother you:
     *   Can't center dialog windows
     *   Grabbing scrollbars: if you move your mouse away while dragging the scrollbar, you lose control of it
+    *   Touch support is tested upstream on Android only; iOS Safari is untested and may misbehave (e.g. long-press menus)
 *   Clipboard and touch support are not available in the upstream Broadway backend and are not part of the GTK3 images
     *   Both the `latest` and `test` GTK4 tags include these features via [gtk-brotway](https://github.com/droserasprout/gtk-brotway), a patched GTK4 Broadway backend — big thanks to [droserasprout](https://github.com/droserasprout) for this contribution!
 

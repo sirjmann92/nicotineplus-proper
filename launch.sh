@@ -82,17 +82,21 @@ sed -i "s/trayicon =.*/trayicon = ${TRAY_ICON:-}/" "$CONFIG_FILE"
 sed -i "s/auto_connect_startup =.*/auto_connect_startup = ${AUTO_CONNECT:-}/" "$CONFIG_FILE"
 
 # Set GTK theme if DARKMODE is enabled
+# BROTWAY_COLOR_SCHEME pins the scheme so Brotway doesn't follow the browser's light/dark preference
 shopt -s nocasematch
 
 if [[ -n "${DARKMODE}" ]]; then
     if [[ "${DARKMODE}" == "False" ]]; then
         sed -i "s/dark_mode =.*/dark_mode = False/" "$CONFIG_FILE"
+        export BROTWAY_COLOR_SCHEME=light
     else
         sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
+        export BROTWAY_COLOR_SCHEME=dark
     fi
 else
     log "DARKMODE not set, using default (dark)."
     sed -i "s/dark_mode =.*/dark_mode = True/" "$CONFIG_FILE"
+    export BROTWAY_COLOR_SCHEME=dark
 fi
 
 shopt -u nocasematch
